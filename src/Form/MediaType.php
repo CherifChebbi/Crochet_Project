@@ -6,6 +6,7 @@ use App\Entity\Media;
 use App\Entity\Product;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,14 +16,17 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            // Add a file upload field
             ->add('url', FileType::class, [
-                'label' => 'Media File (Image or Video)',
-                'mapped' => false, // We don't map the URL directly to the form field
-                'required' => false,
+                'required' => false,  // Optional, because the field can be left empty if no file is uploaded
+                'label' => 'Upload media file (image or video)',
+                'mapped' => false,    // This prevents it from trying to map the file to the entity's field
             ])
-            ->add('type', FileType::class, [
-                'mapped' => false,
-                'required' => false,
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Image' => 'image',
+                    'Video' => 'video',
+                ]
             ])
             ->add('product',EntityType::class,[
                 'class'=>Product::class,

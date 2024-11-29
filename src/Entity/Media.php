@@ -11,7 +11,7 @@ class Media
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private ?int $id = null;
+    private ?int $MediaId = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
@@ -23,9 +23,9 @@ class Media
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    public function getId(): ?int
+    public function getMediaId(): ?int
     {
-        return $this->id;
+        return $this->MediaId;
     }
 
     public function getUrl(): ?string

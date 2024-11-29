@@ -71,27 +71,39 @@ class MediaController extends AbstractController
     #[Route('/{id}', name: 'app_media_delete', methods: ['POST'])]
     public function delete(Request $request, Media $medium, EntityManagerInterface $entityManager): Response
     {
-        // Check CSRF token
-        if ($this->isCsrfTokenValid('delete' . $medium->getId(), $request->request->get('_token'))) {
-            
-            // Get the associated product
-            $product = $medium->getProduct(); // Assuming you have a 'getProduct()' method in the Media entity
-            
+        // Check CSRF token for security
+        if ($this->isCsrfTokenValid('delete' . $medium->getMediaId(), $request->request->get('_token'))) {
+            // Get the associated product from the media
+            $product = $medium->getProduct(); // Assuming 'getProduct()' exists in the Media entity
+
             if ($product) {
-                // Decrement the 'nbr_media' field on the associated product
-                $product->setNbrMedia($product->getNbrMedia() - 1);
-                
-                // Save the product updates
+                // Decrement the 'nbrMedia' field on the associated product
+                $newNbrMedia = max(0, $product->getNbrMedia() - 1); // Ensure nbrMedia is not negative
+                $product->setNbrMedia($newNbrMedia);
+
+                // Persist the updated product
                 $entityManager->persist($product);
             }
 
-            // Remove the media
+            // Remove the media file from the filesystem
+            if ($medium->getUrl()) {
+                $filePath = $this->getParameter('media_directory') . '/' . $medium->getUrl();
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Delete the file from the uploads/media folder
+                }
+            }
+
+            // Remove the media entity from the database
             $entityManager->remove($medium);
             $entityManager->flush();
         }
 
-        // Redirect back to the media index page (or to the product page)
-        return $this->redirectToRoute('app_media_index', [], Response::HTTP_SEE_OTHER);
+        // Redirect to the product edit page
+        return $this->redirectToRoute('app_product_edit', [
+            'id' => $product ? $product->getId() : null,
+        ], Response::HTTP_SEE_OTHER);
     }
+
+
 
 }

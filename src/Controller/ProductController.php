@@ -81,27 +81,52 @@ class ProductController extends AbstractController
     }
 
     #[Route('/product/{id}/edit', name: 'app_product_edit')]
-    public function edit(Product $product, Request $request, ProductRepository $productRepository): Response
+    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
+        // Create the form for the product
         $form = $this->createForm(ProductType::class, $product);
+
+        // Handle the request
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Mettre à jour le nombre de médias en fonction du nombre actuel de médias
-            $product->setNbrMedia(count($product->getMedia()));
+            // Process the uploaded media files
+            $mediaFiles = $form->get('media')->getData();
+            $newMediaCount = 0;
 
-            // Sauvegarder les modifications dans la base de données
-            $productRepository->save($product, true);
+            if ($mediaFiles) {
+                foreach ($mediaFiles as $file) {
+                    // Generate a unique filename
+                    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                    $file->move($this->getParameter('media_directory'), $fileName);
 
-            $this->addFlash('success', 'Product updated successfully!');
-            return $this->redirectToRoute('product_list');
+                    // Create a new Media entity and associate it with the product
+                    $media = new Media();
+                    $media->setUrl($fileName);
+                    $media->setProduct($product);
+
+                    $entityManager->persist($media);
+                    $newMediaCount++;
+                }
+            }
+
+            // Update the number of media by adding the new ones
+            $product->setNbrMedia($product->getNbrMedia() + $newMediaCount);
+
+            // Persist and flush the changes
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            // Redirect to the product detail page
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
         }
 
         return $this->render('product/edit.html.twig', [
             'form' => $form->createView(),
+            'product' => $product,
         ]);
     }
-
+    
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
