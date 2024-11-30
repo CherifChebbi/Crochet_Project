@@ -13,18 +13,46 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/product')]
+
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'app_product_index', methods: ['GET'])]
+    //---------AFFICHAGE-----------
+    //Back
+    #[Route('/admin', name: 'app_product_index_admin', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
+    //index
+    #[Route('/index', name: 'app_product_index', methods: ['GET'])]
+    public function indexF(ProductRepository $productRepository): Response
+    {
+        return $this->render('front/index.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
+    //shop
+    #[Route('/shop', name: 'app_product_shop', methods: ['GET'])]
+    public function shop(ProductRepository $productRepository): Response
+    {
+        return $this->render('front/product.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
+    //contact
+    #[Route('/contact', name: 'app_product_contact', methods: ['GET'])]
+    public function contact(ProductRepository $productRepository): Response
+    {
+        return $this->render('front/contact.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
 
-    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+
+    //--------- AJOUT -----------
+    #[Route('/product/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
@@ -71,8 +99,8 @@ class ProductController extends AbstractController
         ]);
     }
 
-
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    //---------SHOW-----------
+    #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
         return $this->render('product/show.html.twig', [
@@ -80,6 +108,7 @@ class ProductController extends AbstractController
         ]);
     }
 
+    //---------EDIT-----------
     #[Route('/product/{id}/edit', name: 'app_product_edit')]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -126,8 +155,9 @@ class ProductController extends AbstractController
             'product' => $product,
         ]);
     }
-    
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    //---------DELETE-----------
+    //with show
+    #[Route('/product/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
@@ -137,4 +167,6 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
+    //Simple
+
 }

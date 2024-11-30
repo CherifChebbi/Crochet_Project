@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Contact</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+{% block css%}
+	<!--===============================================================================================-->	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<!--===============================================================================================-->	
+		<link rel="icon" type="image/png" href="{{asset('front/images/icons/favicon.png')}}"/>
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/bootstrap/css/bootstrap.min.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/fonts/iconic/css/material-design-iconic-font.min.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/fonts/linearicons-v1.0.0/icon-font.min.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/animate/animate.css')}}">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/css-hamburgers/hamburgers.min.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/animsition/css/animsition.min.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/select2/select2.min.css')}}">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/daterangepicker/daterangepicker.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/slick/slick.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/MagnificPopup/magnific-popup.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{{asset('front/css/util.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('front/css/main.css')}}">
+	<!--===============================================================================================-->
+{% endblock %} 
+</head>
+<body class="animsition">
+	
+	<!-- Header -->
+	<header class="header-v4" >
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<div class="wrap-menu-desktop how-shadow1">
+				<nav class="limiter-menu-desktop container">
+					
+					<!-- Logo desktop -->		
+					<a href="#" class="logo">
+						<img src="{{asset('front/images/crochet/logo.png')}}" alt="IMG-LOGO">
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li >
+								<a href="{{path('app_product_index')}}">Home</a>	
+							</li>
+
+							<li>
+								<a href="{{path('app_product_shop')}}">Shop</a>
+							</li>
+
+							<li>
+								<a href="{{path('app_product_index')}}#about">About</a>
+							</li>
+
+							<li>
+								<a href="{{path('app_product_contact')}}">Contact</a>
+							</li>
+						</ul>
+					</div>	
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+						<!-- Instagram -->
+						<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+							<i class="fab fa-instagram"></i>
+						</a>
+
+						<!-- TikTok -->
+						<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+							<i class="fab fa-tiktok"></i>
+						</a>
+
+						<!-- Panier Icon -->
+						<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+							<i class="fas fa-shopping-cart"></i>
+						</a>
+						
+						<!-- Login Icon -->
+						<a href="/login" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+							<i class="fas fa-user"></i>
+						</a>
+					</div>	
+				</nav>
+			</div>	
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="index.html"><img src="{{asset('front/images/crochet/logo.png')}}" alt="IMG-LOGO"></a>
+			</div>
+
+			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
+				<!-- Instagram -->
+				<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+					<i class="fab fa-instagram"></i>
+				</a>
+
+				<!-- TikTok -->
+				<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+					<i class="fab fa-tiktok"></i>
+				</a>
+
+				<!-- Panier Icon -->
+				<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+					<i class="fas fa-shopping-cart"></i>
+				</a>
+				
+				<!-- Login Icon -->
+				<a href="/login" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+					<i class="fas fa-user"></i>
+				</a>
+			</div>
+			
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="main-menu-m">
+				<li >
+					<a href="{{path('app_product_index')}}">Home</a>	
+				</li>
+
+				<li>
+					<a href="{{path('app_product_shop')}}">Shop</a>
+				</li>
+
+				<li>
+					<a href="{{path('app_product_index')}}#about">About</a>
+				</li>
+
+				<li>
+					<a href="{{path('app_product_contact')}}">Contact</a>
+				</li>
+			</ul>
+		</div>
+	</header>
+	<!-- Title page -->
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('front/images/crochet/0.jpg');">
+		<h2 class="ltext-105 cl0 txt-center">
+			Contact
+		</h2>
+	</section>	
+
+
+	<!-- Content page -->
+	<section class="bg0 p-t-104 p-b-116">
+		<div class="container">
+			<div class="flex-w flex-tr">
+				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+					<form>
+						<h4 class="mtext-105 cl2 txt-center p-b-30">
+							Send Us A Message
+						</h4>
+
+						<div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address">
+							<img class="how-pos4 pointer-none" src="{{asset('front/images/icons/icon-email.png')}}" alt="ICON">
+						</div>
+
+						<div class="bor8 m-b-30">
+							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?"></textarea>
+						</div>
+
+						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+							Submit
+						</button>
+					</form>
+				</div>
+
+				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+					<div class="flex-w w-full p-b-42">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-map-marker"></span>
+						</span>
+
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Address
+							</span>
+
+							<p class="stext-115 cl6 size-213 p-t-18">
+								Coza Store Center 8th floor, 379 Hudson St, New York, NY 10018 US
+							</p>
+						</div>
+					</div>
+
+					<div class="flex-w w-full p-b-42">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-phone-handset"></span>
+						</span>
+
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Lets Talk
+							</span>
+
+							<p class="stext-115 cl1 size-213 p-t-18">
+								+1 800 1236879
+							</p>
+						</div>
+					</div>
+
+					<div class="flex-w w-full">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-envelope"></span>
+						</span>
+
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Sale Support
+							</span>
+
+							<p class="stext-115 cl1 size-213 p-t-18">
+								contact@example.com
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>	
+	
+	
+	
+
+
+
+	<!-- Footer -->
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Categories
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Women
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Men
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shoes
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Watches
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Help
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Track Order
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Returns 
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shipping
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								FAQs
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						GET IN TOUCH
+					</h4>
+
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-instagram"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Newsletter
+					</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+							<div class="focus-input1 trans-04"></div>
+						</div>
+
+						<div class="p-t-18">
+							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+								Subscribe
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+{% block js %}
+	<!--===============================================================================================-->	
+	<script src="{{asset('front/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/animsition/js/animsition.min.js')}}"></script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/bootstrap/js/popper.js')}}"></script>
+	<script src="{{asset('front/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/select2/select2.min.js')}}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/daterangepicker/moment.min.js')}}"></script>
+	<script src="{{asset('front/vendor/daterangepicker/daterangepicker.js')}}"></script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/slick/slick.min.js')}}"></script>
+	<script src="{{asset('front/js/slick-custom.js')}}"></script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/parallax100/parallax100.js')}}"></script>
+	<script>
+        $('.parallax100').parallax100();
+	</script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/MagnificPopup/jquery.magnific-popup.min.js')}}"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+					delegate: 'a', // the selector for gallery item
+					type: 'image',
+					gallery: {
+						enabled:true
+					},
+					mainClass: 'mfp-fade'
+				});
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/isotope/isotope.pkgd.min.js')}}"></script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/sweetalert/sweetalert.min.js')}}"></script>
+	<script>
+		$('.js-addwish-b2').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+	
+	</script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/vendor/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script src="{{asset('front/js/main.js')}}"></script>
+	<!--===============================================================================================-->
+{% endblock %} 
+
+</body>
+</html>
