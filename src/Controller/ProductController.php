@@ -9,6 +9,7 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +34,23 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
+    //dashboard
+    #[Route('/dashboard', name: 'app_dashboard', methods: ['GET'])]
+    public function back(ProductRepository $productRepository): Response
+    {
+        return $this->render('back/dashboard.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
+    //product
+    #[Route('/product', name: 'app_dashboard_product', methods: ['GET'])]
+    public function product(ProductRepository $productRepository): Response
+    {
+        return $this->render('back/product.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
+    
     //shop
     #[Route('/shop', name: 'app_product_shop', methods: ['GET'])]
     public function shop(ProductRepository $productRepository): Response

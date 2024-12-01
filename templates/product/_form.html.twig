@@ -1,4 +1,47 @@
+
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <!-- Colonne 1 -->
+    <div class="col-md-6">
+    
+        <label for="product_name">Name</label>
+        <div class="mb-3">
+            {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'Name'} }) }}
+        </div>
+        <label for="product_color">Color</label>
+        <div class="mb-3">
+            {{ form_widget(form.color, { 'attr': {'class': 'form-control', 'placeholder': 'Color'} }) }}
+        </div>
+        <label for="product_size">Size</label>
+        <div class="mb-3">
+            {{ form_widget(form.size, { 'attr': {'class': 'form-control', 'placeholder': 'Size'} }) }}
+        </div>
+        <label for="product_type">Type</label>
+        <div class="mb-3">
+            {{ form_widget(form.type, { 'attr': {'class': 'form-control', 'placeholder': 'Type'} }) }}
+        </div>
+    </div>
+
+    <!-- Colonne 2 -->
+    <div class="col-md-6">
+        <label for="product_price">Price</label>
+        <div class="mb-3">
+            {{ form_widget(form.price, { 'attr': {'class': 'form-control', 'placeholder': 'Price'} }) }}
+        </div>
+        <label for="product_availability">Availability</label>
+        <div class="mb-3">
+            {{ form_widget(form.availability, { 'attr': {'class': 'form-control', 'placeholder': 'Availability'} }) }}
+        </div>
+        <label for="product_description">Description</label>
+        <div class="mb-3">
+            {{ form_widget(form.description, { 'attr': {'class': 'form-control', 'placeholder': 'Description'} }) }}
+        </div>
+        <label for="product_media">Media</label>
+        <div class="mb-3">
+            {{ form_widget(form.media, { 'attr': {'class': 'form-control', 'placeholder': 'Upload media files'} }) }}
+        </div>
+    </div>
+    <button type="submit" class="btn bg-gradient-danger">
+        {{ button_label|default('Save') }}
+    </button>
 {{ form_end(form) }}
