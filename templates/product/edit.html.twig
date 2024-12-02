@@ -1,44 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/editProduct.html.twig' %}
 
 {% block title %}Edit Product{% endblock %}
 
 {% block body %}
-<h1>Edit Product</h1>
+<div class="row d-flex">
+    <!-- Première carte : Formulaire (à gauche) -->
+    <div class="col-md-7 d-flex">
+        <div class="card w-100">
+            <div class="card-body">
+                {{ form_start(form, { 'action': path('app_product_edit', { 'id': product.id }), 'method': 'POST' }) }}
+                
+                <!-- Gestion des erreurs globales -->
+                {{ form_errors(form) }}
+                
+                <div class="row">
+                    <!-- Colonne 1 -->
+                    <div class="col-md-6">
+                        <label for="product_name">Name</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'Name'} }) }}
+                        </div>
+                        <label for="product_color">Color</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.color, { 'attr': {'class': 'form-control', 'placeholder': 'Color'} }) }}
+                        </div>
+                        <label for="product_size">Size</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.size, { 'attr': {'class': 'form-control', 'placeholder': 'Size'} }) }}
+                        </div>
+                        <label for="product_type">Type</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.type, { 'attr': {'class': 'form-control', 'placeholder': 'Type'} }) }}
+                        </div>
+                    </div>
+                    
+                    <!-- Colonne 2 -->
+                    <div class="col-md-6">
+                        <label for="product_price">Price</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.price, { 'attr': {'class': 'form-control', 'placeholder': 'Price'} }) }}
+                        </div>
+                        <label for="product_availability">Availability</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.availability, { 'attr': {'class': 'form-control', 'placeholder': 'Availability'} }) }}
+                        </div>
+                        <label for="product_description">Description</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.description, { 'attr': {'class': 'form-control', 'placeholder': 'Description'} }) }}
+                        </div>
+                        <label for="product_media">Media</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.media, { 'attr': {'class': 'form-control', 'placeholder': 'Upload media files'} }) }}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bouton de soumission -->
+                <button type="submit" class="btn bg-gradient-danger btn-sm">
+                    {{ button_label|default('Save Changes') }}
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deuxième carte : Médias existants (à droite) -->
+    <div class="col-md-5 d-flex">
+        <div class="card w-100" >
+            <div class="card-body" style="max-height: 450px; overflow-y: auto;" >
+                <ul class="list-unstyled">
+                    {% for media in product.media %}
+                        <li class="d-flex align-items-center mb-3">
+                            <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="Media" class="me-3 img-thumbnail" width="300">          
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <form method="post" action="{{ path('app_media_delete', {'id': media.MediaId}) }}" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.MediaId) }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<!-- Afficher les erreurs globales du formulaire -->
-{{ form_start(form, { 'action': path('app_product_edit', { 'id': product.id }), 'method': 'POST' }) }}
-{{ form_errors(form) }}
-
-<!-- Champs principaux du formulaire -->
-{{ form_row(form.name) }}
-{{ form_row(form.color) }}
-{{ form_row(form.size) }}
-{{ form_row(form.price) }}
-{{ form_row(form.type) }}
-{{ form_row(form.availability) }}
-{{ form_row(form.description) }}
-<!-- Champ pour ajouter de nouveaux fichiers médias -->
-{{ form_row(form.media) }}
-
-<!-- Bouton pour soumettre le formulaire -->
-<button type="submit" class="btn btn-primary">Save changes</button>
-{{ form_end(form) }}
-
-
-<!-- Affichage des médias existants -->
-<h2>Media Collection</h2>
-<ul>
-    {% for media in product.media %}
-        <li>
-            <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="Media" width="100">
-            <form method="post" action="{{ path('app_media_delete', {'id': media.MediaId}) }}" style="display:inline;">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.MediaId) }}">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </li>
-    {% endfor %}
-</ul>
-
-
-<a href="{{ path('app_product_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+<!-- Lien retour à la liste -->
+<a href="{{ path('app_product_index') }}" class="btn bg-gradient-info btn-sm mt-3">Back to list</a>
 {% endblock %}

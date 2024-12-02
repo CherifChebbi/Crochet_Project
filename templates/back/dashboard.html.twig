@@ -41,7 +41,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  active" href="{{asset('back/pages/dashboard.html')}}">
+          <a class="nav-link  active" href="{{ path('app_dashboard') }}" >
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>shop </title>
@@ -61,7 +61,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="{{asset('back/pages/product.html')}}">
+          <a class="nav-link  " href="{{ path('app_product_new') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>document</title>
@@ -304,68 +304,72 @@
       </div>
     </div>
       
-    <div class="card mb-4">
-      <div class="card-header pb-0">
-        <h6>Authors table</h6>
+    <div class="card mb-4 mx-auto" style="max-width: 90%; margin-left: auto; margin-right: auto;">
+      <div class="card-header pb-3">
+          <h6>Products Table</h6>
       </div>
-      <div class="card-body px-0 pt-0 pb-2">
-        <div class="table-responsive p-0">
-        {% block body %}            
-          <table class="table align-items-center mb-0" border="1">
-            <thead>
-                <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Availability</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">actions</th>
+      {% block body %}
+      <div class="card-body pt-0 pb-3 px-4">
+          <!-- Limiter le tableau à 5 lignes avec scroll -->
+          <div class="table-responsive" style="max-height: calc(5 * 3.5rem); overflow-y: auto;">
+              <table class="table align-items-center mb-0 table">
+                  <thead class="bg-light">
+                      <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Availability</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <style>
+                          .description {
+                              max-width: 200px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              white-space: nowrap;
+                          }
+                      </style>
+                      {% for product in products %}
+                      <tr class="event-row">
+                          <td>{{ product.id }}</td>
+                          <td>{{ product.name }}</td>
+                          <td>{{ product.color }}</td>
+                          <td>{{ product.size }}</td>
+                          <td>{{ product.type }}</td>
+                          <td>{{ product.price }}</td>
+                          <td>{{ product.availability ? 'Yes' : 'No' }}</td>
+                          <td class="description">{{ product.description }}</td>
+                          <td>
+                              <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn bg-gradient-danger btn-sm">Show</a>
+                              <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn bg-gradient-info btn-sm">Edit</a>
+                              <a href="{{ path('app_product_delete_simple', {'id': product.id}) }}" class="btn bg-gradient-warning btn-sm">Delete</a>
 
-                
-                    <th class="text-secondary opacity-7"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <style>
-                    .description {
-                        max-width: 200px; /* ajustez cette valeur en fonction de vos besoins */
-                        overflow: hidden;
-                        text-overflow: ellipsis; /* ajout d'une ellipse (...) pour indiquer qu'il y a du contenu coupé */
-                        white-space: nowrap; /* empêche le texte de se retourner à la ligne */
-                    }
-                </style>
-              {% for product in products %}
-                <tr class="event-row">
-                    <td>{{  product.id }}</td>
-                    <td>{{  product.name}}</td> 
-                    <td>{{ product.color }}</td>
-                    <td>{{ product.size }}</td>
-                    <td>{{ product.type }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.availability ? 'Yes' : 'No' }}</td>
-                    <td>{{ product.type }}</td>
-                    <td class="description">{{ product.description}}</td>
-                    <td>
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn bg-gradient-primary">Show</a>
-                        <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn bg-gradient-warning">Edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-                    <a href="{{ path('app_product_new') }}" class="btn bg-gradient-primary">Create New</a>
-
-        {% endblock %}
-        </div>
+                          </td>
+                      </tr>
+                      {% else %}
+                      <tr>
+                          <td colspan="9" class="text-center">No records found</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          <div class="d-flex justify-content-end mt-3">
+              <a href="{{ path('app_product_new') }}" class="btn bg-gradient-primary">Create New</a>
+          </div>
       </div>
-    </div>
+      {% endblock %}
+  </div>
+
+
+
+
   </main>
 
 {% block js %}

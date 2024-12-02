@@ -18,22 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     //---------AFFICHAGE-----------
-    //Back
-    #[Route('/admin', name: 'app_product_index_admin', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
-    {
-        return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
-        ]);
-    }
-    //index
-    #[Route('/index', name: 'app_product_index', methods: ['GET'])]
-    public function indexF(ProductRepository $productRepository): Response
-    {
-        return $this->render('front/index.html.twig', [
-            'products' => $productRepository->findAll(),
-        ]);
-    }
     //dashboard
     #[Route('/dashboard', name: 'app_dashboard', methods: ['GET'])]
     public function back(ProductRepository $productRepository): Response
@@ -42,7 +26,7 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
-    //product
+    //dashboard_product
     #[Route('/product', name: 'app_dashboard_product', methods: ['GET'])]
     public function product(ProductRepository $productRepository): Response
     {
@@ -50,8 +34,17 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
+    //index_front
+    #[Route('/index', name: 'app_product_index', methods: ['GET'])]
+    public function indexF(ProductRepository $productRepository): Response
+    {
+        return $this->render('front/index.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
     
-    //shop
+    
+    //shop_front
     #[Route('/shop', name: 'app_product_shop', methods: ['GET'])]
     public function shop(ProductRepository $productRepository): Response
     {
@@ -59,7 +52,7 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
-    //contact
+    //contact_front
     #[Route('/contact', name: 'app_product_contact', methods: ['GET'])]
     public function contact(ProductRepository $productRepository): Response
     {
@@ -108,7 +101,7 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dashboard', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('product/new.html.twig', [
@@ -117,7 +110,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    //---------SHOW-----------
+    //---------SHOW back-----------
     #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
@@ -126,7 +119,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    //---------EDIT-----------
+    //---------EDIT back -----------
     #[Route('/product/{id}/edit', name: 'app_product_edit')]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -173,7 +166,7 @@ class ProductController extends AbstractController
             'product' => $product,
         ]);
     }
-    //---------DELETE-----------
+    //---------DELETE back-----------
     //with show
     #[Route('/product/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
@@ -185,6 +178,20 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
-    //Simple
+    //---------DELETE SIMPLE back----------------
+    #[Route('/product/{id}/delete', name: 'app_product_delete_simple')]
+    public function deletePays( Product $product, EntityManagerInterface $entityManager): Response
+    {
+        $media = $product->getMedia();
+
+        foreach ($media as $media) {
+            $entityManager->remove($media);
+        }
+
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dashboard');
+    }
 
 }
