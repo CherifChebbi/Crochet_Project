@@ -81,17 +81,14 @@
 						<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fab fa-instagram"></i>
 						</a>
-
 						<!-- TikTok -->
 						<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fab fa-tiktok"></i>
 						</a>
-
 						<!-- Panier Icon -->
 						<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fas fa-shopping-cart"></i>
-						</a>
-						
+						</a>	
 						<!-- Login Icon -->
 						<a href="/login" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fas fa-user"></i>
@@ -104,9 +101,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->		
-			<div class="logo-mobile">
-				<a href="'index.html"><img src="{{asset('front/images/crochet/logo.png')}}" alt="IMG-LOGO"></a>
-			</div>
+			
 
 			<!-- Icon header -->
 			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
@@ -263,128 +258,9 @@
 				</div>
 			</div>
 
-			<div class="row isotope-grid">
-			{% for product in products %}
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0"  style="height: 270px; width: 100%;">
-							{% if product.media is not empty %}
-								<img src="{{ asset('uploads/media/' ~ product.media[0].url ) }}" alt="Product Image">
-							{% else %}
-								<img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image"> {# Image par défaut si pas de média #}
-							{% endif %}
-
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" 
-								data-id="{{ product.id }}">
-								Quick View
-							</a>
-						</div>
-
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<div class="block2-txt-child1 flex-col-l ">
-								<a href="{{asset('front/product-detail.html')}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									<strong>{{ product.name }}</strong>
-								</a>
-
-								<span class="stext-105 cl3">
-									<span>{{ product.price }} DT</span> <!-- "DT" après le prix -->
-									<br>
-									<span>
-										Availability: 
-										<span style="color: {{ product.availability ? 'green' : 'red' }}">
-											{{ product.availability ? 'Yes' : 'No' }}
-										</span>
-									</span>								
-								</span>
-							</div>
-
-							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="{{asset('front/images/icons/icon-heart-01.png')}}" alt="ICON">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('front/images/icons/icon-heart-02.png')}}" alt="ICON">
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Modal -->
-				<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-					<div class="overlay-modal1 js-hide-modal1"></div>
-					<div class="container">
-						<div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-							<button class="how-pos3 hov3 trans-04 js-hide-modal1">
-								<img src="{{asset('front/images/icons/icon-close.png')}}" alt="CLOSE">
-							</button>
-
-							<div class="row">
-								<div class="col-md-6 col-lg-7 p-b-30">
-									<div class="p-l-25 p-r-30 p-lr-0-lg">
-										<div class="wrap-slick3 flex-sb flex-w">
-											<div class="wrap-slick3-dots"></div>
-											<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-	
-											<div class="slick3 gallery-lb">
-											{% if product.media is not empty %}
-												{% for media in product.media %}
-												<div class="item-slick3" data-thumb="{{ asset('uploads/media/' ~ media.url) }}">
-													<div class="wrap-pic-w pos-relative">
-														<img src="{{ asset('uploads/media/' ~ media.url) }}" alt="IMG-PRODUCT">
-														<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" 
-														href="{{ asset('uploads/media/' ~ media.url) }}">
-															<i class="fa fa-expand"></i>
-														</a>
-													</div>
-												</div>
-												{% endfor %}
-											{% endif %}
-											</div>
-
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-5 p-b-30">
-									<div class="p-r-50 p-t-5 p-lr-0-lg">
-										<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-											{{ product.name }}
-										</h4>
-										<span class="mtext-106 cl2">
-											{{ product.price }}
-										</span>
-										<p class="stext-102 cl3 p-t-23">
-											{{ product.availability }}
-										</p>
-										<p class="stext-102 cl3 p-t-23">
-											{{ product.color }}
-										</p>
-										<p class="stext-102 cl3 p-t-23">
-											{{ product.type }}
-										</p>
-										<p class="stext-102 cl3 p-t-23">
-											{{ product.size }}
-										</p>
-										<p class="stext-102 cl3 p-t-23">
-											{{ product.description }}
-										</p>
-										<!--  -->
-										<div class="p-t-33">
-											<div class="flex-w flex-r-m p-b-10">
-												<div class="size-204 flex-w flex-m respon6-next">			
-													<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-														Add to cart
-													</button>
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			{% endfor %}	
-			</div>
+			{% block body %}
+				<!-- Affichage des products in index front -->
+			{% endblock %} 
 			
 			<!-- All Products -->
 			<div class="flex-c-m flex-w w-full p-t-45">

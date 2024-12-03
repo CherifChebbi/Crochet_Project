@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    //---------AFFICHAGE-----------
+    //---------DASHBOARD-----------
     //dashboard
     #[Route('/dashboard', name: 'app_dashboard', methods: ['GET'])]
     public function back(ProductRepository $productRepository): Response
@@ -34,25 +34,24 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
-    //index_front
+    //---------FRONT-----------
+    //front_index
     #[Route('/index', name: 'app_product_index', methods: ['GET'])]
     public function indexF(ProductRepository $productRepository): Response
     {
-        return $this->render('front/index.html.twig', [
+        return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
-    
-    
-    //shop_front
+    //front_shop
     #[Route('/shop', name: 'app_product_shop', methods: ['GET'])]
     public function shop(ProductRepository $productRepository): Response
     {
-        return $this->render('front/product.html.twig', [
+        return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
-    //contact_front
+    //front_contact
     #[Route('/contact', name: 'app_product_contact', methods: ['GET'])]
     public function contact(ProductRepository $productRepository): Response
     {
