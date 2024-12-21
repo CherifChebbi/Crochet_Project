@@ -38,6 +38,11 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('front/css/util.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('front/css/main.css')}}">
 	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <link rel="stylesheet" href="fluid-gallery.css">
+
 {% endblock %} 
 </head>
 <body class="animsition">
@@ -235,7 +240,7 @@
 	<!-- Banner -->
 	<div class="sec-banner bg0 p-t-80 p-b-50">		
 	</div>
-
+ 
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-140">
 		<div class="container">
@@ -244,19 +249,46 @@
 					Product Overview
 				</h3>
 			</div>
-
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-						New Products
-					</button>
-				</div>
-			</div>
-
-			{% block body %}
-				<!-- Affichage des products in index front -->
-			{% endblock %} 
 			
+			<!-- Image Gallery -->
+			<!-- Section About -->
+			<section id="gallery" class="bg-img1 txt-center p-lr-15 p-tb-92" >
+				<div class="tz-gallery">
+					<div class="row">
+						<div class="col-sm-12 col-md-4">
+							<a class="lightbox" href="{{asset('front/images/crochet/4.png')}}">
+								<img src="{{asset('front/images/crochet/4.png')}}" alt="Bridge">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<a class="lightbox" href="{{asset('front/images/crochet/5.png')}}">
+								<img src="{{asset('front/images/crochet/5.png')}}" alt="Park">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<a class="lightbox" href="{{asset('front/images/crochet/6.png')}}">
+								<img src="{{asset('front/images/crochet/6.png')}}" alt="Tunnel">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<a class="lightbox" href="{{asset('front/images/crochet/5.png')}}">
+								<img src="{{asset('front/images/crochet/5.png')}}" alt="Park">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<a class="lightbox" href="{{asset('front/images/crochet/6.png')}}">
+								<img src="{{asset('front/images/crochet/6.png')}}" alt="Tunnel">
+							</a>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<a class="lightbox" href="{{asset('front/images/crochet/5.png')}}">
+								<img src="{{asset('front/images/crochet/5.png')}}" alt="Park">
+							</a>
+						</div>          
+					</div>
+				</div>
+			</section>
+
 			<!-- All Products -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a  href="{{path('app_product_shop')}}" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
@@ -567,6 +599,65 @@
 	<!--===============================================================================================-->
 	<script src="{{asset('front/js/main.js')}}"></script>
 	<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+	<script>
+		baguetteBox.run('.tz-gallery');
+	</script>
+	<style>
+	.gallery-container {
+		margin-top: 20px;
+		padding: 15px;
+		background: #fff;
+		border-radius: 10px;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.tz-gallery {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+	}
+
+	.tz-gallery .row {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+	}
+
+	.col-sm-12, .col-sm-6, .col-md-4, .col-md-8 {
+		flex: 1 0 calc(33.333% - 15px);
+		max-width: calc(33.333% - 15px);
+		position: relative;
+	}
+
+	.col-md-8 {
+		flex: 1 0 calc(66.666% - 15px);
+		max-width: calc(66.666% - 15px);
+	}
+
+	.lightbox img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 10px;
+		transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.lightbox img:hover {
+		transform: scale(1.05);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		filter: brightness(1.1);
+	}
+
+	@media (max-width: 767px) {
+		.col-sm-12, .col-sm-6, .col-md-4, .col-md-8 {
+			flex: 1 0 100%;
+			max-width: 100%;
+		}
+	}
+	</style>
 {% endblock %} 
 </body>
 </html>
