@@ -1,0 +1,118 @@
+{% extends 'front/product.html.twig' %}
+
+{% block body %}
+<div class="row isotope-grid">
+    {% for product in products %}
+        <!-- Product Block -->
+        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
+            <div class="block2">
+                <div class="block2-pic hov-img0" style="height: 270px; width: 100%;">
+                    {% if product.media is not empty %}
+                        <img src="{{ asset('uploads/media/' ~ product.media[0].url) }}" alt="Product Image" style="object-fit: cover;">
+                    {% else %}
+                        <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" style="object-fit: cover;">
+                    {% endif %}
+                </div>
+
+                <div class="block2-txt flex-w flex-t p-t-14">
+                    <div class="block2-txt-child1 flex-col-l">
+                        <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modal-{{ product.id }}">
+                            <strong>{{ product.name }}</strong>
+                        </a>
+
+                        <span class="stext-105 cl3">
+                            {{ product.price }} DT
+                            <br>
+                            Availability: 
+                            <span style="color: {{ product.availability ? 'green' : 'red' }};">
+                                {{ product.availability ? 'Yes' : 'No' }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Modal -->
+        <div class="modal fade" id="modal-{{ product.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 1200px; min-width: 1000px;">
+                <div class="modal-content" style="min-height: 600px;top: 120px;">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"style="padding-top: 30px;">
+                        <div class="row">
+                            <!-- Product Images with Gallery -->
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <!-- Thumbnail List -->
+                                    <div class="col-3">
+                                        <div class="list-group">
+                                            {% if product.media is not empty %}
+                                                {% for media in product.media %}
+                                                    <a href="#" class="list-group-item list-group-item-action p-1" data-bs-target="#carousel-{{ product.id }}" data-bs-slide-to="{{ loop.index0 }}">
+                                                        <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="Thumbnail" class="img-thumbnail" style="height: 100px; width: 100px;object-fit: cover;">
+                                                    </a>
+                                                {% endfor %}
+                                            {% else %}
+                                                <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Thumbnail" class="img-thumbnail" style="height: 100px; object-fit: cover;">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Main Carousel -->
+                                    <div class="col-9">
+                                        <div id="carousel-{{ product.id }}" class="carousel slide" data-bs-ride="carousel" style="height: 450px; overflow: hidden;">
+                                            <div class="carousel-inner">
+                                                {% if product.media is not empty %}
+                                                    {% for media in product.media %}
+                                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                            <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="{{ product.name }}" class="d-block w-100" style="height: 100%; object-fit: cover;">
+                                                        </div>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <div class="carousel-item active">
+                                                        <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" class="d-block w-100" style="height: 100%; object-fit: cover;">
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Details -->
+                            <div class="col-md-6">
+                                <h5><strong>{{ product.name }}</strong></h5>
+                                <p><strong>Price:</strong> {{ product.price }} DT</p>
+                                <p><strong>Availability:</strong>
+                                    <span style="color: {{ product.availability ? 'green' : 'red' }};">
+                                        {{ product.availability ? 'Yes' : 'No' }}
+                                    </span>
+                                </p>
+                                <p><strong>Color:</strong> {{ product.color }}</p>
+                                <p><strong>Type:</strong> {{ product.type }}</p>
+                                <p><strong>Description:</strong> {{ product.description }}</p>
+                                
+                                <form action="" method="POST">
+                                    <button type="submit" class="btn btn-primary w-100">Ajouter au panier</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

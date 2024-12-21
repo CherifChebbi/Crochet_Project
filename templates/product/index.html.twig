@@ -1,4 +1,4 @@
-{% extends 'front/product.html.twig' %}
+{% extends 'front/index.html.twig' %}
 
 {% block body %}
 <div class="row isotope-grid">
@@ -13,12 +13,7 @@
                         <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" style="object-fit: cover;">
                     {% endif %}
 
-                    <!-- Quick View Button -->
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modal-{{ product.id }}">
-                        Quick View
-                    </a>
+                    
                 </div>
 
                 <div class="block2-txt flex-w flex-t p-t-14">
@@ -40,82 +35,7 @@
             </div>
         </div>
 
-        <!-- Product Modal -->
-        <div class="modal fade" id="modal-{{ product.id }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog" style="max-width: 1200px; min-width: 1000px;">
-                <div class="modal-content" style="min-height: 600px;top: 120px;">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body"style="padding-top: 30px;">
-                        <div class="row">
-                            <!-- Product Images with Gallery -->
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <!-- Thumbnail List -->
-                                    <div class="col-3">
-                                        <div class="list-group">
-                                            {% if product.media is not empty %}
-                                                {% for media in product.media %}
-                                                    <a href="#" class="list-group-item list-group-item-action p-1" data-bs-target="#carousel-{{ product.id }}" data-bs-slide-to="{{ loop.index0 }}">
-                                                        <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="Thumbnail" class="img-thumbnail" style="height: 100px; width: 100px;object-fit: cover;">
-                                                    </a>
-                                                {% endfor %}
-                                            {% else %}
-                                                <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Thumbnail" class="img-thumbnail" style="height: 100px; object-fit: cover;">
-                                            {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <!-- Main Carousel -->
-                                    <div class="col-9">
-                                        <div id="carousel-{{ product.id }}" class="carousel slide" data-bs-ride="carousel" style="height: 450px; overflow: hidden;">
-                                            <div class="carousel-inner">
-                                                {% if product.media is not empty %}
-                                                    {% for media in product.media %}
-                                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                            <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="{{ product.name }}" class="d-block w-100" style="height: 100%; object-fit: cover;">
-                                                        </div>
-                                                    {% endfor %}
-                                                {% else %}
-                                                    <div class="carousel-item active">
-                                                        <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" class="d-block w-100" style="height: 100%; object-fit: cover;">
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Product Details -->
-                            <div class="col-md-6">
-                                <h5><strong>{{ product.name }}</strong></h5>
-                                <p><strong>Price:</strong> {{ product.price }} DT</p>
-                                <p><strong>Availability:</strong>
-                                    <span style="color: {{ product.availability ? 'green' : 'red' }};">
-                                        {{ product.availability ? 'Yes' : 'No' }}
-                                    </span>
-                                </p>
-                                <p><strong>Color:</strong> {{ product.color }}</p>
-                                <p><strong>Type:</strong> {{ product.type }}</p>
-                                <p><strong>Description:</strong> {{ product.description }}</p>
-                                
-                                <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     {% endfor %}
 </div>
 {% endblock %}

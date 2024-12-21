@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 class ProductController extends AbstractController
@@ -34,6 +35,13 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
+    #[Route('/sign_up', name: 'app_dashboard_sign_up', methods: ['GET'])]
+    public function sign_up(ProductRepository $productRepository): Response
+    {
+        return $this->render('back/sign-up.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
     //---------FRONT-----------
     //front_index
     #[Route('/index', name: 'app_product_index', methods: ['GET'])]
@@ -47,7 +55,7 @@ class ProductController extends AbstractController
     #[Route('/shop', name: 'app_product_shop', methods: ['GET'])]
     public function shop(ProductRepository $productRepository): Response
     {
-        return $this->render('product/index.html.twig', [
+        return $this->render('product/shop.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
@@ -192,5 +200,6 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard');
     }
-
+    //-----------------------------------------------------------------------------------------------
+    
 }

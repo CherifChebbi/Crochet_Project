@@ -1,0 +1,61 @@
+{% extends 'back/editUser.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+<div class="row d-flex">
+    <!-- Première carte : Formulaire (à gauche) -->
+    <div class="col-md-7 d-flex">
+        <div class="card w-100">
+            <div class="card-body">
+                {{ form_start(form, { 'action': path('app_dashboard_user_edit', { 'id': user.id }), 'method': 'POST' }) }}
+                
+                <!-- Gestion des erreurs globales -->
+                {{ form_errors(form) }}
+                
+                <div class="row">
+                    <!-- Colonne 1 -->
+                    <div class="col-md-6">
+                        <label for="firstName">First Name</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.firstName, { 'attr': {'class': 'form-control', 'placeholder': 'First Name'} }) }}
+                        </div>
+                        <label for="lastName">Last Name</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.lastName, { 'attr': {'class': 'form-control', 'placeholder': 'Last Name'} }) }}
+                        </div>
+                        <label for="email">Email</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email Address'} }) }}
+                        </div>
+                    </div>
+                    
+                    <!-- Colonne 2 -->
+                    <div class="col-md-6">
+                        <label for="phoneNumber">Phone Number</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control', 'placeholder': 'Phone Number'} }) }}
+                        </div>
+                        <label for="roles">Role</label>
+                        <div class="mb-3">
+                            {{ form_widget(form.roles, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Bouton de soumission -->
+                <button type="submit" class="btn bg-gradient-danger btn-sm">
+                    {{ button_label|default('Save Changes') }}
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+<!-- Lien retour à la liste -->
+<a href="{{ path('app_dashboard_user') }}" class="btn bg-gradient-info btn-sm mt-3">Back to list</a>
+{% endblock %}
