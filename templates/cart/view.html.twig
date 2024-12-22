@@ -1,25 +1,113 @@
-<h2>Votre Panier</h2>
-{% for item in cart %}
-    <div class="cart-item d-flex align-items-center">
-        <div class="cart-item-image">
-            {% if item.product.media is not empty and item.product.media|length > 0 %}
-                <img src="{{ asset('uploads/media/' ~ item.product.media[0].url) }}" alt="Product Image" style="object-fit: cover; width: 100px; height: auto;">
-            {% else %}
-                <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" style="object-fit: cover; width: 100px; height: auto;">
-            {% endif %}
-        </div>
-        <div class="cart-item-details ms-3">
-            <p><strong>{{ item.product.name }}</strong> - {{ item.product.price }} DT</p>
-            <p>Quantité:
-                <form action="{{ path('cart_update', {id: item.product.id}) }}" method="POST">
-                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10">
-                    <button type="submit" class="btn btn-sm btn-primary">Mettre à jour</button>
-                </form>
-            </p>
-            <form action="{{ path('cart_remove', {id: item.product.id}) }}" method="POST">
-                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-            </form>
+{% extends 'front/front_base.html.twig' %}
+{% block body %}
+
+<section class="h-100 h-custom" >
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4">
+
+                        <div class="row">
+                            <!-- Shopping Cart Items -->
+                            <div class="col-lg-7">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <p class="mb-3"><b>Panier</b></p>
+                                        <p class="mb-0">
+                                            Vous avez <b class="text-danger">{{ cart|length }} articles</b> dans votre panier
+                                        </p>                                    
+                                    </div>
+                                </div>
+
+                                {% for item in cart %}
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div>
+                                                        {% if item.product.media is not empty and item.product.media|length > 0 %}
+                                                            <img src="{{ asset('uploads/media/' ~ item.product.media[0].url) }}"
+                                                                class="img-fluid rounded-3"
+                                                                alt="{{ item.product.name }}"
+                                                                style="width: 65px;">
+                                                        {% else %}
+                                                            <img src="{{ asset('front/images/crochet/0.jpg') }}"
+                                                                class="img-fluid rounded-3"
+                                                                alt="Default Image"
+                                                                style="width: 65px;">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <h5>{{ item.product.name }}</h5>
+                                                        <p class="small mb-0">Prix: {{ item.product.price }} DT</p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <form action="{{ path('cart_update', {id: item.product.id}) }}" method="POST" class="d-flex align-items-center">
+                                                        <input type="number" name="quantity" class="form-control form-control-sm" 
+                                                            value="{{ item.quantity }}" min="1" max="10" style="width: 60px;">
+                                                        <button type="submit" class="btn btn-sm btn-primary ms-2">
+                                                            <i class="fas fa-sync-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                    <div style="width: 80px;" class="text-end ms-3">
+                                                        <h5 class="mb-0">{{ item.product.price * item.quantity }} DT</h5>
+                                                    </div>
+                                                    <form action="{{ path('cart_remove', {id: item.product.id}) }}" method="POST" class="ms-2">
+                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Cart Summary -->
+                            <div class="col-lg-5">
+                                <div class="card bg-light border-0 shadow-sm rounded-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <h5 class="mb-0 text-dark"><b>Résumé de la commande</b></h5>
+                                        </div>
+
+                                        <hr class="my-4">
+
+                                        <div class="d-flex justify-content-between">
+                                            <p class="mb-2 text-muted">Sous-total</p>
+                                            <p class="mb-2 text-primary">{{ total }} DT</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between">
+                                            <p class="mb-2 text-muted">Frais de livraison</p>
+                                            <p class="mb-2 text-warning">{{ 7 }} DT</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <p class="mb-2 text-muted fw-bold">Total (TTC)</p>
+                                            <p class="mb-2 text-success fw-bold">{{ total + 7 }} DT</p>
+                                        </div>
+
+                                        <a href="" class="btn btn-primary btn-block btn-lg rounded-pill shadow">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span>Valider</span>
+                                                <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-{% endfor %}
-<p><strong>Total: </strong>{{ total }} DT</p>
+</section>
+
+{% endblock %}
