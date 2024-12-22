@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,6 @@ class CartController extends AbstractController
     public function updateQuantity($id, Request $request, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
- 
         // Vérifier si le produit est dans le panier
         if (isset($cart[$id])) {
             $quantity = $request->request->get('quantity');
@@ -69,10 +69,13 @@ class CartController extends AbstractController
     }
 
     private function calculateTotal($cart)
-    {
+    {     
         $total = 0;
         foreach ($cart as $item) {
-            $total += $item['product']->getPrice() * $item['quantity'];
+            // Vérifiez que $item['product'] est un objet Product
+            if ($item['product'] instanceof Product) {
+                $total += $item['product']->getPrice() * $item['quantity'];
+            }
         }
         return $total;
     }
@@ -122,7 +125,12 @@ class CartController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    #[Route('/cart/debug', name: 'cart_debug')]
+    public function debugCart(SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+        return $this->json($cart);
+    }
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
     public function removeFromCart($id, SessionInterface $session): Response
     {
