@@ -20,7 +20,16 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
-
+    public function findWithMedia($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.media', 'm')
+            ->addSelect('m')
+            ->where('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
 //    /**
 //     * @return Product[] Returns an array of Product objects

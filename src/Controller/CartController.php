@@ -17,7 +17,7 @@ class CartController extends AbstractController
     #[Route('/cart/add/{id}', name: 'cart_add', methods: ['POST'])]
     public function addToCart($id, Request $request, SessionInterface $session, ProductRepository $productRepository): Response
     {
-        $product = $productRepository->find($id);
+        $product = $productRepository->find($id); // Charger avec les médias
 
         if (!$product) {
             return $this->json(['message' => 'Produit introuvable'], 404);
@@ -28,9 +28,19 @@ class CartController extends AbstractController
         }
         $cart = $session->get('cart', []);
 
-        // Ajouter le produit une seule fois
+        // Ajouter ou mettre à jour le produit dans le panier
         if (!isset($cart[$id])) {
-            $cart[$id] = ['product' => $product, 'quantity' => 1];
+            $cart[$id] = [
+                'product' => [
+                    'id' => $product->getId(),
+                    'name' => $product->getName(),
+                    'price' => $product->getPrice(),
+                    'media' => $product->getMedia()->toArray(), // Ajouter les médias
+                ],
+                'quantity' => 1,
+            ];
+        } else {
+            $cart[$id]['quantity'] += 1; // Si le produit existe déjà, augmenter la quantité
         }
 
         // Sauvegarder dans la session
@@ -42,8 +52,7 @@ class CartController extends AbstractController
             'cartCount' => count($cart),
         ]);
     }
-
-
+    
 
     #[Route('/cart/update/{id}', name: 'cart_update', methods: ['POST'])]
     public function updateQuantity($id, Request $request, SessionInterface $session): Response
@@ -72,13 +81,12 @@ class CartController extends AbstractController
     {     
         $total = 0;
         foreach ($cart as $item) {
-            // Vérifiez que $item['product'] est un objet Product
-            if ($item['product'] instanceof Product) {
-                $total += $item['product']->getPrice() * $item['quantity'];
-            }
+            // Utiliser les informations stockées dans le tableau du panier
+            $total += $item['product']['price'] * $item['quantity'];
         }
         return $total;
     }
+
     #[Route('/cart', name: 'cart_view', methods: ['GET'])]
     public function viewCart(SessionInterface $session): Response
     {
@@ -127,9 +135,9 @@ class CartController extends AbstractController
     }
     #[Route('/cart/debug', name: 'cart_debug')]
     public function debugCart(SessionInterface $session): Response
-    {
+    {   
         $cart = $session->get('cart', []);
-        return $this->json($cart);
+        return $this->json($cart); // Affiche le contenu du panier pour vérifier les données
     }
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
     public function removeFromCart($id, SessionInterface $session): Response

@@ -3,7 +3,7 @@
     <div class="cart-item d-flex align-items-center">
         <div class="cart-item-image">
             {% if item.product.media is not empty and item.product.media|length > 0 %}
-                <img src="{{ asset('uploads/media/' ~ item.product.media[0]) }}" alt="Product Image" style="object-fit: cover; width: 100px; height: auto;">
+                <img src="{{ asset('uploads/media/' ~ item.product.media[0].url) }}" alt="Product Image" style="object-fit: cover; width: 100px; height: auto;">
             {% else %}
                 <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" style="object-fit: cover; width: 100px; height: auto;">
             {% endif %}
