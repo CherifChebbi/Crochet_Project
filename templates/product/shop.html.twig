@@ -104,9 +104,39 @@
                                 <p><strong>Type:</strong> {{ product.type }}</p>
                                 <p><strong>Description:</strong> {{ product.description }}</p>
                                 
-                                <form action="" method="POST">
+                                <!-- Ajouter au panier -->
+                                <form method="POST" action="{{ path('cart_add', {id: product.id}) }}" class="add-to-cart-form">
                                     <button type="submit" class="btn btn-primary w-100">Ajouter au panier</button>
                                 </form>
+                                <script>
+                                    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+                                    form.addEventListener('submit', async (e) => {
+                                        e.preventDefault();  // Empêche la soumission normale du formulaire
+
+                                        const submitButton = form.querySelector('button');
+                                        submitButton.disabled = true;  // Désactiver le bouton pour éviter les soumissions multiples
+
+                                        const response = await fetch(form.action, { method: 'POST' });
+
+                                        if (response.ok) {
+                                            const data = await response.json();
+                                            alert(data.message);  // Afficher le message de succès
+
+                                            // Mettre à jour l'icône du panier
+                                            document.querySelector('.icon-header-item i').textContent = data.cartCount;
+                                        } else {
+                                            const error = await response.json();
+                                            alert(error.message);  // Afficher le message d'erreur
+                                        }
+
+                                        // Réactiver le bouton après un court délai (par exemple 1 seconde)
+                                        setTimeout(() => {
+                                            submitButton.disabled = false;
+                                        }, 1000);
+                                    });
+                                });
+                                </script>
+
                             </div>
                         </div>
                     </div>

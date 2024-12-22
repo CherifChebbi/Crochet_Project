@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Produits</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.customerName }}</td>
+                <td>{{ order.customerAddress }}</td>
+                <td>{{ order.customerPhone }}</td>
+                <td>
+                    {% for product in order.products %}
+                        {{ product.name }} ({{ product.price }}€)<br>
+                    {% endfor %}
+                </td>
+                <td>{{ order.totalAmount }}€</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

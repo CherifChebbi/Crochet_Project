@@ -1,0 +1,25 @@
+<h2>Votre Panier</h2>
+{% for item in cart %}
+    <div class="cart-item d-flex align-items-center">
+        <div class="cart-item-image">
+            {% if item.product.media is not empty and item.product.media|length > 0 %}
+                <img src="{{ asset('uploads/media/' ~ item.product.media[0].url) }}" alt="Product Image" style="object-fit: cover; width: 100px; height: auto;">
+            {% else %}
+                <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" style="object-fit: cover; width: 100px; height: auto;">
+            {% endif %}
+        </div>
+        <div class="cart-item-details ms-3">
+            <p><strong>{{ item.product.name }}</strong> - {{ item.product.price }} DT</p>
+            <p>Quantité:
+                <form action="{{ path('cart_update', {id: item.product.id}) }}" method="POST">
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10">
+                    <button type="submit" class="btn btn-sm btn-primary">Mettre à jour</button>
+                </form>
+            </p>
+            <form action="{{ path('cart_remove', {id: item.product.id}) }}" method="POST">
+                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+<p><strong>Total: </strong>{{ total }} DT</p>
