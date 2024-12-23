@@ -3,14 +3,23 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class OrderController extends AbstractController
 {
+    #[Route('/dashboard/orders', name: 'app_dashboard_orders', methods: ['GET'])]
+    public function back(OrderRepository $orderRepository): Response
+    {
+        return $this->render('back/orders.html.twig', [
+            'orders' => $orderRepository->findAll(),
+        ]);
+    }
     #[Route('/order/new', name: 'order_new')]
     public function new(Request $request): Response
     {
@@ -65,4 +74,24 @@ class OrderController extends AbstractController
             'total' => $totalWithDelivery, // Afficher le total avec les frais de livraison
         ]);
     }
+    //---------DELETE SIMPLE back----------------
+    #[Route('/order/{id}/delete', name: 'app_order_delete_simple')]
+    public function deletePays( Order $order, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($order);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dashboard_orders');
+    }
+    //---------SHOW back-----------
+#[Route('/order/{id}', name: 'app_order_show', methods: ['GET'])]
+public function show(Order $order): Response
+{
+    return $this->render('order/show.html.twig', [
+        'order' => $order,
+    ]);
+}
+
+
+    
 }

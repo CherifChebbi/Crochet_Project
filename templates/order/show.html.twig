@@ -1,0 +1,51 @@
+{% extends 'back/showOrder.html.twig' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block body %}
+<div class="row d-flex">
+    <!-- Première carte : Détails de la commande (à gauche) -->
+    <div class="col-md-7 d-flex">
+        <div class="card w-100">
+            <div class="card-body">
+                <h1>Order #{{ order.id }}</h1>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Order ID</th>
+                            <td>{{ order.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Customer Name</th>
+                            <td>{{ order.customerName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Customer Address</th>
+                            <td>{{ order.customerAddress }}</td>
+                        </tr>
+                        <tr>
+                            <th>Customer Phone</th>
+                            <td>{{ order.customerPhone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount</th>
+                            <td>{{ order.totalAmount }} DT</td>
+                        </tr>
+                        <tr>
+                            <th>Products</th>
+                            <td>
+                                {% for productId in order.productIds %}
+                                    <span class="badge bg-secondary">{{ productId }}</span>
+                                {% else %}
+                                    <span>No products in this order</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="{{ path('app_dashboard_orders') }}" class="btn bg-gradient-info btn-sm">Back to list</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
