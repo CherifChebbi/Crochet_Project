@@ -45,6 +45,7 @@ class OrderController extends AbstractController
         // Créer une nouvelle commande
         $order = new Order();
         $order->setTotalAmount($totalWithDelivery); // Utiliser le total avec les frais de livraison
+        $order->setOrderDate(new \DateTime()); // Ajouter la date actuelle
 
         // Ajouter les IDs des produits à l'ordre
         $productIds = array_map(fn($item) => $item['product']['id'], $cart);
@@ -91,6 +92,49 @@ public function show(Order $order): Response
         'order' => $order,
     ]);
 }
+
+    #[Route('/order/update/{id}', name: 'app_order_edit')]
+    public function updateOrder(int $id, Request $request, OrderRepository $orderRepository, EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve the order from the database using the provided ID
+        $order = $orderRepository->find($id);
+
+        // If the order does not exist, throw a 404 error
+        if (!$order) {
+            throw $this->createNotFoundException('Order not found');
+        }
+
+        // Check if the form has been submitted and handle the update manually
+        if ($request->isMethod('POST')) {
+            // Retrieve data from the form or query parameters
+            $customerName = $request->request->get('customerName');
+            $customerAddress = $request->request->get('customerAddress');
+            $customerPhone = $request->request->get('customerPhone');
+            $totalAmount = $request->request->get('totalAmount');
+            $productIds = $request->request->get('productIds');
+            $isVerified = $request->request->get('isVerified') === 'on'; // Checkbox handling for boolean values
+
+            // Manually set the new values to the order object
+            $order->setCustomerName($customerName);
+            $order->setCustomerAddress($customerAddress);
+            $order->setCustomerPhone($customerPhone);
+            $order->setTotalAmount((float)$totalAmount);
+            $order->setProductIds(explode('-', $productIds)); // Assuming productIds are passed as a hyphen-separated string
+            $order->setIsVerified($isVerified);
+
+            // Persist the changes to the database
+            $entityManager->flush();
+
+            // Redirect or return a success message
+            $this->addFlash('success', 'Order updated successfully');
+            return $this->redirectToRoute('app_dashboard_orders');  // Redirect to a list of orders or another page
+        }
+
+        // Render the form manually, passing the current order data as default values
+        return $this->render('order/edit.html.twig', [
+            'order' => $order,
+        ]);
+    }
 
 
     

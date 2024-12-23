@@ -311,38 +311,48 @@
           <!-- Limiter le tableau à 5 lignes avec scroll -->
           <div class="table-responsive" style="max-height: calc(5 * 3.5rem); overflow-y: auto;">
               <table class="table align-items-center mb-0 table">
-                  <thead class="bg-light">
-                      <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">customerName</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">customerAddress</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">customerPhone</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">totalAmount</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">productIds</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <style>
-                          .description {
-                              max-width: 200px;
-                              overflow: hidden;
-                              text-overflow: ellipsis;
-                              white-space: nowrap;
-                          }
-                      </style>
+                <thead class="bg-light">
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Customer Name</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer Address</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer Phone</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Amount</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product IDs</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Verified</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order Date</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <style>
+                        .description {
+                            max-width: 200px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                    </style>
                     {% for order in orders %}
                     <tr class="event-row">
                         <td>{{ order.id }}</td>
                         <td>{{ order.customerName }}</td>
                         <td>{{ order.customerAddress }}</td>
                         <td>{{ order.customerPhone }}</td>
-                        <td>{{ order.totalAmount }}</td>
+                        <td>{{ order.totalAmount }} DT</td>
                         <td>{{ order.productIds is iterable ? order.productIds|join(', ') : order.productIds }}</td>
                         <td>
-                            <a href="{{ path('app_order_show', {'id': order.id}) }}" class="btn bg-gradient-info btn-sm">Show</a>
-                            <a href="{{ path('app_order_delete_simple', {'id': order.id}) }}" class="btn bg-gradient-danger btn-sm">Delete</a>
-
+                            {% if order.isVerified %}
+                                <span class="badge bg-success">Verified</span>
+                            {% else %}
+                                <span class="badge bg-danger">Not Verified</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ order.orderDate|date('Y-m-d H:i:s') }}</td>
+                        <td>
+                            <a href="{{ path('app_order_show', {'id': order.id}) }}" class="btn bg-gradient-danger btn-sm">Show</a>
+                            <a href="{{ path('app_order_edit', {'id': order.id}) }}" class="btn bg-gradient-info btn-sm">Edit</a>
+                            <a href="{{ path('app_order_delete_simple', {'id': order.id}) }}" class="btn bg-gradient-warning btn-sm">Delete</a>
                         </td>
                     </tr>
                     {% else %}
@@ -352,6 +362,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+
         </div>
     </div>
     {% endblock %}

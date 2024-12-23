@@ -1,0 +1,65 @@
+{% extends 'back/editOrder.html.twig' %}
+
+{% block title %}Edit Order{% endblock %}
+
+{% block body %}
+<div class="row d-flex">
+    <!-- First card: Form (on the left) -->
+    <div class="col-md-7 d-flex">
+        <div class="card w-100">
+            <div class="card-body">
+                <form action="{{ path('app_order_edit', {id: order.id}) }}" method="post">
+                    <!-- Global error handling -->           
+                    <div class="row">
+                        <!-- Column 1 -->
+                        <div class="col-md-6">
+                            <label for="customerName">Customer Name</label>
+                            <div class="mb-3">
+                                <input type="text" id="customerName" name="customerName" value="{{ order.customerName }}" class="form-control" placeholder="Customer Name" required>
+                            </div>
+
+                            <label for="customerAddress">Customer Address</label>
+                            <div class="mb-3">
+                                <textarea id="customerAddress" name="customerAddress" class="form-control" placeholder="Customer Address" required>{{ order.customerAddress }}</textarea>
+                            </div>
+
+                            <label for="customerPhone">Customer Phone</label>
+                            <div class="mb-3">
+                                <input type="text" id="customerPhone" name="customerPhone" value="{{ order.customerPhone }}" class="form-control" placeholder="Customer Phone" required>
+                            </div>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="col-md-6">
+                            <label for="totalAmount">Total Amount</label>
+                            <div class="mb-3">
+                                <input type="number" id="totalAmount" name="totalAmount" value="{{ order.totalAmount }}" step="0.01" class="form-control" placeholder="Total Amount" required>
+                            </div>
+
+                            <label for="productIds">Product IDs (comma-separated)</label>
+                            <div class="mb-3">
+                                <input type="text" id="productIds" name="productIds" value="{{ order.productIds|join('-') }}" class="form-control" placeholder="Product IDs" required>
+                            </div>
+                            <label for="isVerified">Verified Order</label>
+                            <div class="mb-3">
+                                <input type="checkbox" id="isVerified" name="isVerified" {% if order.isVerified %}checked{% endif %} class="form-check-input" 
+                                style="border: 2px solid {% if order.isVerified %}#28a745{% else %}#dc3545{% endif %}; padding: 0.25rem;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn bg-gradient-danger btn-sm">
+                        Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<!-- Back to Order List link -->
+<a href="{{ path('app_dashboard_orders') }}" class="btn bg-gradient-info btn-sm mt-3">Back to Order List</a>
+{% endblock %}

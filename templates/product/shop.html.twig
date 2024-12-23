@@ -105,53 +105,51 @@
                                 <p><strong>Description:</strong> {{ product.description }}</p>
                                 
                                 <!-- Ajouter au panier -->
-<!-- Ajouter au panier -->
-<form method="POST" action="{{ path('cart_add', {id: product.id}) }}" class="add-to-cart-form">
-    <button type="submit" class="btn btn-primary w-100">Ajouter au panier</button>
-    <!-- Message sous le bouton pour afficher l'état du produit -->
-    <div class="product-status" style="display: none; color: green;">Produit ajouté au panier !</div>
-    <div class="product-status-error" style="display: none; color: red;">Produit non disponible !</div>
-</form>
+                                <form method="POST" action="{{ path('cart_add', {id: product.id}) }}" class="add-to-cart-form">
+                                    <button type="submit" class="btn btn-primary w-100">Ajouter au panier</button>
+                                    <!-- Message sous le bouton pour afficher l'état du produit -->
+                                    <div class="product-status" style="display: none; color: green;">Produit ajouté au panier !</div>
+                                    <div class="product-status-error" style="display: none; color: red;">Produit non disponible !</div>
+                                </form>
 
-<script>
-    document.querySelectorAll('.add-to-cart-form').forEach(form => {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();  // Empêche la soumission normale du formulaire
+                                <script>
+                                    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+                                        form.addEventListener('submit', async (e) => {
+                                            e.preventDefault();  // Empêche la soumission normale du formulaire
 
-            const submitButton = form.querySelector('button');
-            submitButton.disabled = true;  // Désactiver le bouton pour éviter les soumissions multiples
+                                            const submitButton = form.querySelector('button');
+                                            submitButton.disabled = true;  // Désactiver le bouton pour éviter les soumissions multiples
 
-            const response = await fetch(form.action, { method: 'POST' });
+                                            const response = await fetch(form.action, { method: 'POST' });
 
-            // Sélectionner les éléments pour afficher les messages
-            const successMessage = form.querySelector('.product-status');
-            const errorMessage = form.querySelector('.product-status-error');
+                                            // Sélectionner les éléments pour afficher les messages
+                                            const successMessage = form.querySelector('.product-status');
+                                            const errorMessage = form.querySelector('.product-status-error');
 
-            if (response.ok) {
-                const data = await response.json();
+                                            if (response.ok) {
+                                                const data = await response.json();
 
-                // Afficher le message de succès
-                successMessage.style.display = 'block';
-                errorMessage.style.display = 'none'; // Cacher le message d'erreur si le produit est ajouté
+                                                // Afficher le message de succès
+                                                successMessage.style.display = 'block';
+                                                errorMessage.style.display = 'none'; // Cacher le message d'erreur si le produit est ajouté
 
-                // Mettre à jour l'icône du panier
-                document.querySelector('.icon-header-item i').textContent = data.cartCount;
-            } else {
-                const error = await response.json();
+                                                // Mettre à jour l'icône du panier
+                                                document.querySelector('.icon-header-item i').textContent = data.cartCount;
+                                            } else {
+                                                const error = await response.json();
 
-                // Afficher le message d'erreur
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none'; // Cacher le message de succès si le produit n'est pas disponible
-            }
+                                                // Afficher le message d'erreur
+                                                errorMessage.style.display = 'block';
+                                                successMessage.style.display = 'none'; // Cacher le message de succès si le produit n'est pas disponible
+                                            }
 
-            // Réactiver le bouton après un court délai (par exemple 1 seconde)
-            setTimeout(() => {
-                submitButton.disabled = false;
-            }, 1000);
-        });
-    });
-</script>
-
+                                            // Réactiver le bouton après un court délai (par exemple 1 seconde)
+                                            setTimeout(() => {
+                                                submitButton.disabled = false;
+                                            }, 1000);
+                                        });
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

@@ -41,6 +41,20 @@
                                 {% endfor %}
                             </td>
                         </tr>
+                        <tr>
+                            <th>Verified Order</th>
+                            <td>
+                                {% if order.isVerified %}
+                                    <span class="badge bg-success">Verified</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Not Verified</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Order Date</th>
+                            <td>{{ order.orderDate|date('Y-m-d H:i:s') }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <a href="{{ path('app_dashboard_orders') }}" class="btn bg-gradient-info btn-sm">Back to list</a>
