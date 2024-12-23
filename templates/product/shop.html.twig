@@ -16,146 +16,170 @@
 
                 <div class="block2-txt flex-w flex-t p-t-14">
                     <div class="block2-txt-child1 flex-col-l">
+                        <!-- Product Name with Modal Trigger -->
                         <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#modal-{{ product.id }}">
-                            <strong>{{ product.name }}</strong>
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modal-{{ product.id }}">
+                            <strong class="text-uppercase">{{ product.name }}</strong>
                         </a>
 
-                        <span class="stext-105 cl3">
-                            {{ product.price }} DT
-                            <br>
-                            Availability: 
-                            <span style="color: {{ product.availability ? 'green' : 'red' }};">
-                                {{ product.availability ? 'Yes' : 'No' }}
+                        <!-- Product Price and Availability -->
+                        <div class="d-flex align-items-center">
+                            <span class="stext-105 cl3 me-3">
+                                <strong>{{ product.price }} DT</strong>
                             </span>
-                        </span>
+
+                            <!-- Availability with Icon -->
+                            <span class="d-flex align-items-center">
+                                <i class="bi {{ product.availability ? 'bi-check-circle' : 'bi-x-circle' }} me-2" style="color: {{ product.availability ? 'green' : 'red' }};"></i>
+                                <span style="color: {{ product.availability ? 'green' : 'red' }};">
+                                    {{ product.availability ? 'Available' : 'Out of Stock' }}
+                                </span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Product Modal -->
-        <div class="modal fade" id="modal-{{ product.id }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog" style="max-width: 1200px; min-width: 1000px;">
-                <div class="modal-content" style="min-height: 600px;top: 120px;">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body"style="padding-top: 30px;">
+<div class="modal fade" id="modal-{{ product.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 1200px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5">
+                <div class="row">
+                    <!-- Product Images with Gallery -->
+                    <div class="col-md-6 mb-4">
                         <div class="row">
-                            <!-- Product Images with Gallery -->
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <!-- Thumbnail List -->
-                                    <div class="col-3">
-                                        <div class="list-group">
-                                            {% if product.media is not empty %}
-                                                {% for media in product.media %}
-                                                    <a href="#" class="list-group-item list-group-item-action p-1" data-bs-target="#carousel-{{ product.id }}" data-bs-slide-to="{{ loop.index0 }}">
-                                                        <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="Thumbnail" class="img-thumbnail" style="height: 100px; width: 100px;object-fit: cover;">
-                                                    </a>
-                                                {% endfor %}
-                                            {% else %}
-                                                <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Thumbnail" class="img-thumbnail" style="height: 100px; object-fit: cover;">
-                                            {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <!-- Main Carousel -->
-                                    <div class="col-9">
-                                        <div id="carousel-{{ product.id }}" class="carousel slide" data-bs-ride="carousel" style="height: 450px; overflow: hidden;">
-                                            <div class="carousel-inner">
-                                                {% if product.media is not empty %}
-                                                    {% for media in product.media %}
-                                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                            <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="{{ product.name }}" class="d-block w-100" style="height: 100%; object-fit: cover;">
-                                                        </div>
-                                                    {% endfor %}
-                                                {% else %}
-                                                    <div class="carousel-item active">
-                                                        <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" class="d-block w-100" style="height: 100%; object-fit: cover;">
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
-                                        </div>
-                                    </div>
+                            <!-- Thumbnail List -->
+                            <div class="col-3">
+                                <div class="list-group">
+                                    {% if product.media is not empty %}
+                                        {% for media in product.media %}
+                                            <a href="#" class="list-group-item list-group-item-action p-1" data-bs-target="#carousel-{{ product.id }}" data-bs-slide-to="{{ loop.index0 }}">
+                                                <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="Thumbnail" class="img-thumbnail rounded-3" style="height: 100px; width: 100px; object-fit: cover;">
+                                            </a>
+                                        {% endfor %}
+                                    {% else %}
+                                        <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Thumbnail" class="img-thumbnail rounded-3" style="height: 100px; object-fit: cover;">
+                                    {% endif %}
                                 </div>
                             </div>
-
-                            <!-- Product Details -->
-                            <div class="col-md-6">
-                                <h5><strong>{{ product.name }}</strong></h5>
-                                <p><strong>Price:</strong> {{ product.price }} DT</p>
-                                <p><strong>Availability:</strong>
-                                    <span style="color: {{ product.availability ? 'green' : 'red' }};">
-                                        {{ product.availability ? 'Yes' : 'No' }}
-                                    </span>
-                                </p>
-                                <p><strong>Color:</strong> {{ product.color }}</p>
-                                <p><strong>Type:</strong> {{ product.type }}</p>
-                                <p><strong>Description:</strong> {{ product.description }}</p>
-                                
-                                <!-- Ajouter au panier -->
-                                <form method="POST" action="{{ path('cart_add', {id: product.id}) }}" class="add-to-cart-form">
-                                    <button type="submit" class="btn btn-primary w-100">Ajouter au panier</button>
-                                    <!-- Message sous le bouton pour afficher l'état du produit -->
-                                    <div class="product-status" style="display: none; color: green;">Produit ajouté au panier !</div>
-                                    <div class="product-status-error" style="display: none; color: red;">Produit non disponible !</div>
-                                </form>
-
-                                <script>
-                                    document.querySelectorAll('.add-to-cart-form').forEach(form => {
-                                        form.addEventListener('submit', async (e) => {
-                                            e.preventDefault();  // Empêche la soumission normale du formulaire
-
-                                            const submitButton = form.querySelector('button');
-                                            submitButton.disabled = true;  // Désactiver le bouton pour éviter les soumissions multiples
-
-                                            const response = await fetch(form.action, { method: 'POST' });
-
-                                            // Sélectionner les éléments pour afficher les messages
-                                            const successMessage = form.querySelector('.product-status');
-                                            const errorMessage = form.querySelector('.product-status-error');
-
-                                            if (response.ok) {
-                                                const data = await response.json();
-
-                                                // Afficher le message de succès
-                                                successMessage.style.display = 'block';
-                                                errorMessage.style.display = 'none'; // Cacher le message d'erreur si le produit est ajouté
-
-                                                // Mettre à jour l'icône du panier
-                                                document.querySelector('.icon-header-item i').textContent = data.cartCount;
-                                            } else {
-                                                const error = await response.json();
-
-                                                // Afficher le message d'erreur
-                                                errorMessage.style.display = 'block';
-                                                successMessage.style.display = 'none'; // Cacher le message de succès si le produit n'est pas disponible
-                                            }
-
-                                            // Réactiver le bouton après un court délai (par exemple 1 seconde)
-                                            setTimeout(() => {
-                                                submitButton.disabled = false;
-                                            }, 1000);
-                                        });
-                                    });
-                                </script>
+                            <!-- Main Carousel -->
+                            <div class="col-9">
+                                <div id="carousel-{{ product.id }}" class="carousel slide" data-bs-ride="carousel" style="height: 450px; overflow: hidden;">
+                                    <div class="carousel-inner">
+                                        {% if product.media is not empty %}
+                                            {% for media in product.media %}
+                                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                    <img src="{{ asset('uploads/media/' ~ media.url) }}" alt="{{ product.name }}" class="d-block w-100" style="height: 100%; object-fit: cover;">
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="carousel-item active">
+                                                <img src="{{ asset('front/images/crochet/0.jpg') }}" alt="Default Image" class="d-block w-100" style="height: 100%; object-fit: cover;">
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ product.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="col-md-6">
+                        <h5 class="mb-3 text-dark"><strong>{{ product.name }}</strong></h5>
+                        <p class="mb-3"><strong>Price:</strong> <span class="text-success">{{ product.price }} DT</span></p>
+                        <p class="mb-3"><strong>Availability:</strong>
+                            <span class="badge {{ product.availability ? 'bg-success' : 'bg-danger' }} text-white">{{ product.availability ? 'Available' : 'Out of Stock' }}</span>
+                        </p>
+                        <p class="mb-3"><strong>Color:</strong> {{ product.color }}</p>
+                        <p class="mb-3"><strong>Type:</strong> {{ product.type }}</p>
+                        <p class="mb-4 text-muted">{{ product.description }}</p>
+                        
+                        <!-- Add to Cart Button -->
+                        <form method="POST" action="{{ path('cart_add', {id: product.id}) }}" class="add-to-cart-form">
+                            <button type="submit" class="btn btn-primary w-100 py-3 rounded-3 shadow-sm">Add to Cart</button>
+                            <!-- Status Messages -->
+                            <div class="product-status mt-3" style="display: none; color: green;">Product added to cart!</div>
+                            <div class="product-status-error mt-3" style="display: none; color: red;">Product unavailable!</div>
+                        </form>
+
+                        <!-- JavaScript for Add to Cart -->
+                        <script>
+                            document.querySelectorAll('.add-to-cart-form').forEach(form => {
+                                form.addEventListener('submit', async (e) => {
+                                    e.preventDefault(); // Prevent form submission
+
+                                    const submitButton = form.querySelector('button');
+                                    submitButton.disabled = true; // Disable button to prevent multiple submissions
+
+                                    const response = await fetch(form.action, { method: 'POST' });
+
+                                    const successMessage = form.querySelector('.product-status');
+                                    const errorMessage = form.querySelector('.product-status-error');
+
+                                    if (response.ok) {
+                                        const data = await response.json();
+                                        successMessage.style.display = 'block';
+                                        errorMessage.style.display = 'none';
+                                        document.querySelector('.icon-header-item i').textContent = data.cartCount; // Update cart icon
+                                    } else {
+                                        const error = await response.json();
+                                        successMessage.style.display = 'none';
+                                        errorMessage.style.display = 'block';
+                                    }
+
+                                    setTimeout(() => {
+                                        submitButton.disabled = false;
+                                    }, 1000);
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .modal-dialog {
+        top: 10%;  /* Ensure the modal is aligned below the navbar */
+        transform: translateY(10%); /* Center the modal vertically */
+    }
+
+    .modal-body {
+        padding-top: 0 !important; /* Remove extra padding that might push it down */
+    }
+
+    /* Optional: Custom close button */
+    .btn-close {
+        background-color: transparent;
+        border: none;
+        font-size: 2rem;
+        color: #000;
+        opacity: 0.7;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+</style>
+
+
     {% endfor %}
 </div>
 {% endblock %}
