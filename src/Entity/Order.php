@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -28,13 +25,14 @@ class Order
     #[ORM\Column(type: 'float')]
     private ?float $totalAmount = null;
 
-    #[ORM\ManyToMany(targetEntity: Product::class)]
-    #[ORM\JoinTable(name: 'order_products')]
-    private Collection $products;
+    // Stocker les IDs des produits sous forme de chaîne (séparée par des tirets)
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $productIds = '';
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        // Initialiser la chaîne vide
+        $this->productIds = '';
     }
 
     public function getId(): ?int
@@ -91,25 +89,40 @@ class Order
     }
 
     /**
-     * @return Collection<int, Product>
+     * Récupérer les IDs des produits sous forme de tableau
      */
-    public function getProducts(): Collection
+    public function getProductIds(): array
     {
-        return $this->products;
+        return explode('-', $this->productIds); // Convertir la chaîne en tableau
     }
 
-    public function addProduct(Product $product): self
+    /**
+     * Définir les IDs des produits sous forme de chaîne (séparée par des tirets)
+     */
+    public function setProductIds(array $productIds): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-        }
+        $this->productIds = implode('-', $productIds); // Convertir le tableau en chaîne
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    // Méthodes pour ajouter ou supprimer des produits
+    public function addProductId(int $productId): self
     {
-        $this->products->removeElement($product);
+        $productIds = $this->getProductIds();
+        if (!in_array($productId, $productIds)) {
+            $productIds[] = $productId;
+        }
+        $this->setProductIds($productIds);
+
+        return $this;
+    }
+
+    public function removeProductId(int $productId): self
+    {
+        $productIds = $this->getProductIds();
+        $productIds = array_filter($productIds, fn($id) => $id != $productId);
+        $this->setProductIds($productIds);
 
         return $this;
     }

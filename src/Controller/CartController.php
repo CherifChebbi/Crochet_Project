@@ -1,7 +1,4 @@
 <?php
-
-// src/Controller/CartController.php
-
 namespace App\Controller;
 
 use App\Entity\Product;
@@ -26,9 +23,11 @@ class CartController extends AbstractController
         if (!$product->isAvailability()) {
             return $this->json(['message' => 'Produit non disponible'], 400);
         }
+
+        // Récupérer le panier existant
         $cart = $session->get('cart', []);
 
-        // Ajouter ou mettre à jour le produit dans le panier
+        // Ajouter le produit si il n'est pas déjà dans le panier
         if (!isset($cart[$id])) {
             $cart[$id] = [
                 'product' => [
@@ -36,11 +35,8 @@ class CartController extends AbstractController
                     'name' => $product->getName(),
                     'price' => $product->getPrice(),
                     'media' => $product->getMedia()->toArray(), // Ajouter les médias
-                ],
-                'quantity' => 1,
+                ]
             ];
-        } else {
-            $cart[$id]['quantity'] += 1; // Si le produit existe déjà, augmenter la quantité
         }
 
         // Sauvegarder dans la session
@@ -52,93 +48,21 @@ class CartController extends AbstractController
             'cartCount' => count($cart),
         ]);
     }
-    
-
-    #[Route('/cart/update/{id}', name: 'cart_update', methods: ['POST'])]
-    public function updateQuantity($id, Request $request, SessionInterface $session): Response
-    {
-        $cart = $session->get('cart', []);
-        // Vérifier si le produit est dans le panier
-        if (isset($cart[$id])) {
-            $quantity = $request->request->get('quantity');
-            // Mettre à jour la quantité (assurez-vous que la quantité est un nombre valide)
-            if (is_numeric($quantity) && $quantity > 0) {
-                $cart[$id]['quantity'] = (int) $quantity;
-            }
-        }
-
-        // Sauvegarder à nouveau le panier dans la session
-        $session->set('cart', $cart);
-
-        // Calculer le total
-        $total = $this->calculateTotal($cart);
-
-        // Retourner la réponse avec la mise à jour du panier
-        return $this->redirectToRoute('cart_view');
-    }
-
-    private function calculateTotal($cart)
-    {     
-        $total = 0;
-        foreach ($cart as $item) {
-            // Utiliser les informations stockées dans le tableau du panier
-            $total += $item['product']['price'] * $item['quantity'];
-        }
-        return $total;
-    }
 
     #[Route('/cart', name: 'cart_view', methods: ['GET'])]
     public function viewCart(SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
+        
+        // Calculer le total
         $total = $this->calculateTotal($cart);
-    
+
         return $this->render('cart/view.html.twig', [
             'cart' => $cart,
             'total' => $total
         ]);
     }
-    
-    #[Route('/cart/checkout', name: 'cart_checkout', methods: ['GET', 'POST'])]
-    public function checkout(SessionInterface $session, Request $request): Response
-    {
-        $cart = $session->get('cart', []);
 
-        if (!$cart) {
-            $this->addFlash('error', 'Votre panier est vide.');
-            return $this->redirectToRoute('home');
-        }
-
-        $form = $this->createFormBuilder()
-            ->add('name')
-            ->add('surname')
-            ->add('address')
-            ->add('phone')
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            // Sauvegarder les informations dans la base de données (simulation ici)
-
-            $this->addFlash('success', 'Commande passée avec succès.');
-            $session->remove('cart'); // Vider le panier
-
-            return $this->redirectToRoute('home');
-        }
-
-        return $this->render('cart/checkout.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-    #[Route('/cart/debug', name: 'cart_debug')]
-    public function debugCart(SessionInterface $session): Response
-    {   
-        $cart = $session->get('cart', []);
-        return $this->json($cart); // Affiche le contenu du panier pour vérifier les données
-    }
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
     public function removeFromCart($id, SessionInterface $session): Response
     {
@@ -155,5 +79,13 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_view');
     }
 
-
+    private function calculateTotal($cart)
+    {
+        $total = 0;
+        foreach ($cart as $item) {
+            // Calculer le total sans tenir compte de la quantité
+            $total += $item['product']['price'];     // Pas besoin de multiplier par la quantité, un produit = un item
+        }
+        return $total;
+    }
 }

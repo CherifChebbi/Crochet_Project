@@ -1,7 +1,7 @@
 {% extends 'front/front_base.html.twig' %}
 {% block body %}
 
-<section class="h-100 h-custom" >
+<section class="h-100 h-custom">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
@@ -16,7 +16,7 @@
                                         <p class="mb-3"><b>Panier</b></p>
                                         <p class="mb-0">
                                             Vous avez <b class="text-danger">{{ cart|length }} articles</b> dans votre panier
-                                        </p>                                    
+                                        </p>
                                     </div>
                                 </div>
 
@@ -44,15 +44,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex flex-row align-items-center">
-                                                    <form action="{{ path('cart_update', {id: item.product.id}) }}" method="POST" class="d-flex align-items-center">
-                                                        <input type="number" name="quantity" class="form-control form-control-sm" 
-                                                            value="{{ item.quantity }}" min="1" max="10" style="width: 60px;">
-                                                        <button type="submit" class="btn btn-sm btn-primary ms-2">
-                                                            <i class="fas fa-sync-alt"></i>
-                                                        </button>
-                                                    </form>
                                                     <div style="width: 80px;" class="text-end ms-3">
-                                                        <h5 class="mb-0">{{ item.product.price * item.quantity }} DT</h5>
+                                                        <h5 class="mb-0">{{ item.product.price }} DT</h5>
                                                     </div>
                                                     <form action="{{ path('cart_remove', {id: item.product.id}) }}" method="POST" class="ms-2">
                                                         <button type="submit" class="btn btn-sm btn-danger">
@@ -91,7 +84,7 @@
                                             <p class="mb-2 text-success fw-bold">{{ total + 7 }} DT</p>
                                         </div>
 
-                                        <a href="" class="btn btn-primary btn-block btn-lg rounded-pill shadow">
+                                        <a href="{{ path('order_new') }}" class="btn btn-primary btn-block btn-lg rounded-pill shadow">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <span>Valider</span>
                                                 <i class="fas fa-long-arrow-alt-right ms-2"></i>

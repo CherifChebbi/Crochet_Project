@@ -1,0 +1,61 @@
+{% extends 'front/front_base.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="font-size: 2.5rem; font-weight: 600; color: #333;">Validation de votre commande</h2>
+
+    <div class="row">
+        <!-- Résumé du panier -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-0 rounded-lg" style="background-color: #f9f9f9;">
+                <div class="card-header bg-primary text-white text-center p-4">
+                    <h4 class="font-weight-bold mb-0">Résumé de votre commande</h4>
+                </div>
+                <div class="card-body p-4">
+                    <ul class="list-group list-group-flush">
+                        {% for item in cart %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center" style="border: none;">
+                                <span style="font-size: 1.1rem; color: #333;">{{ item.product.name }}</span>
+                                <span style="font-size: 1.2rem; color: #5C6BC0;">{{ item.product.price }} DT</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <hr class="my-3" style="border-top: 1px solid #ddd;">
+                    <h5 class="mt-3 text-center" >
+                        <strong>Total :</strong> <span class="text-success" style="font-weight: 600;">{{ total }} DT</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire de commande -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 rounded-lg" style="background-color: #f9f9f9;">
+                <div class="card-header bg-success text-white text-center p-4">
+                    <h4 class="font-weight-bold mb-0">Informations de livraison</h4>
+                </div>
+                <div class="card-body p-4">
+                    {{ form_start(form) }}
+                        <div class="mb-4">
+                            <label for="customerName" class="form-label" style="font-weight: 500; color: #333;">Nom complet</label>
+                            {{ form_widget(form.customerName, { 'attr': { 'class': 'form-control rounded-lg' } }) }}
+                            {{ form_errors(form.customerName) }}
+                        </div>
+                        <div class="mb-4">
+                            <label for="customerAddress" class="form-label" style="font-weight: 500; color: #333;">Adresse de livraison</label>
+                            {{ form_widget(form.customerAddress, { 'attr': { 'class': 'form-control rounded-lg' } }) }}
+                            {{ form_errors(form.customerAddress) }}
+                        </div>
+                        <div class="mb-4">
+                            <label for="customerPhone" class="form-label" style="font-weight: 500; color: #333;">Numéro de téléphone</label>
+                            {{ form_widget(form.customerPhone, { 'attr': { 'class': 'form-control rounded-lg' } }) }}
+                            {{ form_errors(form.customerPhone) }}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
