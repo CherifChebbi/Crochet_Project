@@ -14,10 +14,37 @@ use Doctrine\ORM\EntityManagerInterface;
 class OrderController extends AbstractController
 {
     #[Route('/dashboard/orders', name: 'app_dashboard_orders', methods: ['GET'])]
-    public function back(OrderRepository $orderRepository): Response
+    public function back(OrderRepository $orderRepository,ProductRepository $productRepository, Request $request): Response
     {
+        // Récupérer les paramètres de tri, de filtrage et de recherche
+        $sortByDate = $request->query->get('sort_by_date', 'desc'); // Par défaut, tri par date décroissante
+        $filterByVerified = $request->query->get('filter_by_verified');
+        $searchQuery = $request->query->get('search_query'); // Nouveau paramètre de recherche
+
+        // Convertir la chaîne vide en null pour le filtre
+        if ($filterByVerified === '') {
+            $filterByVerified = null;
+        }
+
+        // Utiliser les méthodes du repository pour trier, filtrer et rechercher
+        $orders = $orderRepository->findAllSortedAndFiltered($sortByDate, $filterByVerified, $searchQuery);
+
+        // Récupérer les statistiques
+        $todayOrdersCount = $orderRepository->countTodayOrders();
+        $notVerifiedOrdersCount = $orderRepository->countNotVerifiedOrders();
+        $mostSoldProduct = $orderRepository->findMostSoldProduct($productRepository);
+        $productsSoldThisMonth = $orderRepository->countProductsSoldThisMonth();
+
         return $this->render('back/orders.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'orders' => $orders,
+            'sort_by_date' => $sortByDate,
+            'filter_by_verified' => $filterByVerified,
+            'search_query' => $searchQuery,
+            'today_orders_count' => $todayOrdersCount,
+            'not_verified_orders_count' => $notVerifiedOrdersCount,
+            'most_sold_product' => $mostSoldProduct,
+            'products_sold_this_month' => $productsSoldThisMonth,
+            
         ]);
     }
     #[Route('/order/new', name: 'order_new')]
