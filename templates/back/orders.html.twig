@@ -33,12 +33,19 @@
 <body class="g-sidenav-show  bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href="" target="_blank">
-        <img src="{{asset('back/assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">ZaiZen</span>
-      </a>
-    </div>
+			<a class="navbar-brand m-0" target="_blank">
+				<!-- Texte avec dégradé de bleu sombre -->
+				<span class="ms-2 font-weight-bold" style="
+					font-family: 'Poppins', sans-serif;
+					font-size: 1.5rem;
+					background: linear-gradient(45deg, #1565C0, #0D47A1);
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+				">
+					ZaiZen
+				</span>
+			</a>
+		</div>
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
@@ -189,7 +196,7 @@
                             </div>
                             <div>
                                 <h5 class="text-white font-weight-bolder mb-0">{{ today_orders_count }}</h5>
-                                <span class="text-white text-sm">Commandes aujourd'hui</span>
+                                <span class="text-white text-sm">Orders Today</span>
                             </div>
                         </div>
                     </div>
@@ -206,7 +213,7 @@
                             </div>
                             <div>
                                 <h5 class="text-white font-weight-bolder mb-0">{{ not_verified_orders_count }}</h5>
-                                <span class="text-white text-sm">Commandes non vérifiées</span>
+                                <span class="text-white text-sm">Unverified Orders</span>
                             </div>
                         </div>
                     </div>
@@ -226,10 +233,10 @@
                                     {% if most_sold_product %}
                                         {{ most_sold_product.name }}
                                     {% else %}
-                                        Aucun produit vendu
+                                        No Products Sold
                                     {% endif %}
                                 </h5>
-                                <span class="text-white text-sm">Produit le plus vendu</span>
+                                <span class="text-white text-sm"> Best-Selling Product</span>
                             </div>
                         </div>
                     </div>
@@ -246,7 +253,7 @@
                             </div>
                             <div>
                                 <h5 class="text-white font-weight-bolder mb-0">{{ products_sold_this_month }}</h5>
-                                <span class="text-white text-sm">Produits vendus ce mois</span>
+                                <span class="text-white text-sm">Products Sold This Month</span>
                             </div>
                         </div>
                     </div>
@@ -267,32 +274,32 @@
         <div class="row align-items-end">
             <!-- Champ de recherche par customer name ou ID -->
             <div class="col-md-3">
-                <label for="search_query" class="form-label">Rechercher par nom ou ID</label>
-                <input type="text" name="search_query" id="search_query" class="form-control" placeholder="Nom ou ID..." value="{{ search_query }}">
+                <label for="search_query" class="form-label">Search by name or ID</label>
+                <input type="text" name="search_query" id="search_query" class="form-control" placeholder=" Name or ID..." value="{{ search_query }}">
             </div>
 
             <!-- Tri par date -->
             <div class="col-md-3">
-                <label for="sort_by_date" class="form-label">Trier par date</label>
+                <label for="sort_by_date" class="form-label">Sort by date</label>
                 <select name="sort_by_date" id="sort_by_date" class="form-select" onchange="document.getElementById('filter-form').submit()">
-                    <option value="desc" {{ sort_by_date == 'desc' ? 'selected' : '' }}>Date décroissante</option>
-                    <option value="asc" {{ sort_by_date == 'asc' ? 'selected' : '' }}>Date croissante</option>
+                    <option value="desc" {{ sort_by_date == 'desc' ? 'selected' : '' }}> Descending date</option>
+                    <option value="asc" {{ sort_by_date == 'asc' ? 'selected' : '' }}>Ascending date</option>
                 </select>
             </div>
 
             <!-- Filtre par vérification -->
             <div class="col-md-3">
-                <label for="filter_by_verified" class="form-label">Filtrer par vérification</label>
+                <label for="filter_by_verified" class="form-label">Filter by Verification</label>
                 <select name="filter_by_verified" id="filter_by_verified" class="form-select" onchange="document.getElementById('filter-form').submit()">
-                    <option value="" {{ filter_by_verified is null ? 'selected' : '' }}>Tous</option>
-                    <option value="1" {{ filter_by_verified == '1' ? 'selected' : '' }}>Vérifié</option>
-                    <option value="0" {{ filter_by_verified == '0' ? 'selected' : '' }}>Non vérifié</option>
+                    <option value="" {{ filter_by_verified is null ? 'selected' : '' }}>All</option>
+                    <option value="1" {{ filter_by_verified == '1' ? 'selected' : '' }}>Verified</option>
+                    <option value="0" {{ filter_by_verified == '0' ? 'selected' : '' }}>Not Verified</option>
                 </select>
             </div>
 
             <!-- Bouton de recherche -->
             <div class="col-md-3">
-                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+                <button type="submit" class="btn btn-primary w-100">Search</button>
             </div>
         </div>
     </form>
@@ -343,6 +350,9 @@
                         <a href="{{ path('app_order_show', {'id': order.id}) }}" class="btn bg-gradient-danger btn-sm">Show</a>
                         <a href="{{ path('app_order_edit', {'id': order.id}) }}" class="btn bg-gradient-info btn-sm">Edit</a>
                         <a href="{{ path('app_order_delete_simple', {'id': order.id}) }}" class="btn bg-gradient-warning btn-sm">Delete</a>
+                        <a href="{{ path('app_export_order_pdf', {'id': order.id}) }}"class="btn bg-gradient-danger">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </a>
                     </td>
                 </tr>
                 {% else %}

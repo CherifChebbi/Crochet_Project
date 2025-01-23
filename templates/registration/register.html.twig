@@ -23,20 +23,25 @@
                         {{ form_errors(registrationForm) }}
                         {{ form_start(registrationForm, { 'attr': {'class': 'needs-validation'} }) }}
                         
-                        <div class="form-floating mb-3">
-                            {{ form_widget(registrationForm.firstName, { 'attr': {'class': 'form-control', 'placeholder': 'First Name'} }) }}
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.firstName, 'First Name', { 'label_attr': {'class': 'form-label'} }) }}
+                            {{ form_widget(registrationForm.firstName, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your first name'} }) }}
                         </div>
-                        <div class="form-floating mb-3">
-                            {{ form_widget(registrationForm.lastName, { 'attr': {'class': 'form-control', 'placeholder': 'Last Name'} }) }}
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.lastName, 'Last Name', { 'label_attr': {'class': 'form-label'} }) }}
+                            {{ form_widget(registrationForm.lastName, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your last name'} }) }}
                         </div>
-                        <div class="form-floating mb-3">
-                            {{ form_widget(registrationForm.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email Address'} }) }}
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.email, 'Email Address', { 'label_attr': {'class': 'form-label'} }) }}
+                            {{ form_widget(registrationForm.email, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your email address'} }) }}
                         </div>
-                        <div class="form-floating mb-3">
-                            {{ form_widget(registrationForm.phoneNumber, { 'attr': {'class': 'form-control', 'placeholder': 'Phone Number'} }) }}
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.phoneNumber, 'Phone Number', { 'label_attr': {'class': 'form-label'} }) }}
+                            {{ form_widget(registrationForm.phoneNumber, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your phone number'} }) }}
                         </div>
-                        <div class="form-floating mb-3">
-                            {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control', 'placeholder': 'Password'} }) }}
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.plainPassword, 'Password', { 'label_attr': {'class': 'form-label'} }) }}
+                            {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your password'} }) }}
                         </div>
                         <div class="form-check mb-4">
                             {{ form_widget(registrationForm.agreeTerms, { 'attr': {'class': 'form-check-input'} }) }}

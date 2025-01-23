@@ -19,12 +19,38 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class ProductController extends AbstractController
 {
     //---------DASHBOARD-----------
-    //dashboard
     #[Route('/dashboard', name: 'app_dashboard', methods: ['GET'])]
-    public function back(ProductRepository $productRepository): Response
+    public function back(ProductRepository $productRepository, Request $request): Response
     {
+        // Récupérer les paramètres de recherche, de filtrage et de tri
+        $searchQuery = $request->query->get('search_query');
+        $filterByAvailability = $request->query->get('filter_by_availability');
+        $sortByDate = $request->query->get('sort_by_date', 'desc'); // Par défaut, tri par date décroissante
+
+        // Convertir la chaîne vide en null pour le filtre
+        if ($filterByAvailability === '') {
+            $filterByAvailability = null;
+        }
+
+        // Utiliser les méthodes du repository pour trier, filtrer et rechercher
+        $products = $productRepository->findAllSortedAndFiltered($searchQuery, $filterByAvailability, $sortByDate);
+
+        // Récupérer les statistiques
+        $totalProducts = $productRepository->countTotalProducts();
+        $availableProducts = $productRepository->countProductsByAvailability(true);
+        $notAvailableProducts = $productRepository->countProductsByAvailability(false);
+        $productsAddedThisMonth = $productRepository->countProductsAddedThisMonth();
+
         return $this->render('back/dashboard.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
+            'search_query' => $searchQuery,
+            'filter_by_availability' => $filterByAvailability,
+            'sort_by_date' => $sortByDate,
+            'totalProducts' => $totalProducts,
+            'availableProducts' => $availableProducts,
+            'notAvailableProducts' => $notAvailableProducts,
+            'productsAddedThisMonth' => $productsAddedThisMonth,
+            
         ]);
     }
     //dashboard_product
@@ -74,6 +100,8 @@ class ProductController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
+        $product->setProductDate(new \DateTime()); 
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -159,7 +187,8 @@ class ProductController extends AbstractController
 
             // Update the number of media by adding the new ones
             $product->setNbrMedia($product->getNbrMedia() + $newMediaCount);
-
+            $product->setProductDate(new \DateTime()); 
+            
             // Persist and flush the changes
             $entityManager->persist($product);
             $entityManager->flush();

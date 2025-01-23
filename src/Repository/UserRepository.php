@@ -46,29 +46,53 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+    public function findBySearchAndRole(?string $searchQuery, ?string $roleFilter): array
+    {
+        $qb = $this->createQueryBuilder('u');
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        // Recherche par firstName, lastName ou id
+        if ($searchQuery !== null && $searchQuery !== '') {
+            // Vérifier si la chaîne de recherche peut être convertie en entier (pour l'id)
+            if (ctype_digit($searchQuery)) {
+                // Si oui, comparer l'ID avec la valeur convertie
+                $qb->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('u.firstName', ':searchQuery'),
+                    $qb->expr()->like('u.lastName', ':searchQuery'),
+                    $qb->expr()->eq('u.id', ':searchQueryId')
+                ))
+                ->setParameter('searchQuery', '%' . $searchQuery . '%')
+                ->setParameter('searchQueryId', (int) $searchQuery);
+            } else {
+                // Sinon, rechercher uniquement par firstName et lastName
+                $qb->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('u.firstName', ':searchQuery'),
+                    $qb->expr()->like('u.lastName', ':searchQuery')
+                ))
+                ->setParameter('searchQuery', '%' . $searchQuery . '%');
+            }
+        }
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+         // Filtre par rôle
+        if ($roleFilter) {
+        // Convertir le tableau de rôles en chaîne JSON et vérifier si le rôle est présent
+        $qb->andWhere($qb->expr()->like('u.roles', ':roleFilter'))
+            ->setParameter('roleFilter', '%' . json_encode($roleFilter) . '%');
+        }
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+     /**
+     * Compte le nombre d'utilisateurs ayant un rôle spécifique.
+     */
+    public function countUsersByRole(string $role): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%' . json_encode($role) . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

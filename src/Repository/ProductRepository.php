@@ -31,28 +31,79 @@ class ProductRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findAllSortedAndFiltered(?string $searchQuery = null, ?bool $filterByAvailability = null, ?string $sortByDate = 'desc'): array
+    {
+        $qb = $this->createQueryBuilder('p');
+        
+        // Appliquer le filtre par availability
+        if ($filterByAvailability !== null) {
+            $qb->andWhere('p.availability = :availability')
+                ->setParameter('availability', $filterByAvailability);
+        }
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        // Appliquer la recherche par  name ou ID
+        if ($searchQuery !== null && $searchQuery !== '') {
+            // Vérifier si la chaîne de recherche peut être convertie en entier
+            if (ctype_digit($searchQuery)) {
+                // Si oui, comparer l'ID avec la valeur convertie
+                $qb->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('p.name', ':searchQuery'),
+                    $qb->expr()->eq('p.id', ':searchQueryId')
+                ))
+                ->setParameter('searchQuery', '%' . $searchQuery . '%')
+                ->setParameter('searchQueryId', (int) $searchQuery);
+            } else {
+                // Sinon, rechercher uniquement par customerName
+                $qb->andWhere($qb->expr()->like('p.name', ':searchQuery'))
+                    ->setParameter('searchQuery', '%' . $searchQuery . '%');
+            }   
+        }
+
+        // Tri par date d'ajout
+        $qb->orderBy('p.productDate', $sortByDate === 'asc' ? 'ASC' : 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+    /**
+     * Retourne le nombre total de produits.
+     */
+    public function countTotalProducts(): int
+    {
+        return $this->count([]);
+    }
+    /**
+     * Retourne le nombre de produits disponibles ou non disponibles.
+     */
+    public function countProductsByAvailability(bool $availability): int
+    {
+        return $this->count(['availability' => $availability]);
+    }
+
+    /**
+     * Retourne le nombre de produits ajoutés dans une période donnée.
+     */
+    public function countProductsAddedBetween(\DateTimeInterface $startDate, \DateTimeInterface $endDate): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.productDate BETWEEN :start AND :end')
+            ->setParameter('start', $startDate->format('Y-m-d 00:00:00'))
+            ->setParameter('end', $endDate->format('Y-m-d 23:59:59'))
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne le nombre de produits ajoutés ce mois-ci.
+     */
+    public function countProductsAddedThisMonth(): int
+    {
+        $startDate = new \DateTime('first day of this month');
+        $endDate = new \DateTime('last day of this month');
+
+        return $this->countProductsAddedBetween($startDate, $endDate);
+    }
+
+    
+
 }

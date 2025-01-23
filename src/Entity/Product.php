@@ -31,8 +31,8 @@ class Product
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?float $price = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $availability = null;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $availability = false;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -42,6 +42,9 @@ class Product
 
     #[ORM\Column(type: "integer", options: ["default" => 0])]
     private int $nbr_media = 0;  // New field to store the media count
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $productDate = null;  // Date d ajout du product
 
     public function __construct()
     {
@@ -145,6 +148,17 @@ class Product
     {
         $this->nbr_media = $nbr_media;
 
+        return $this;
+    }
+    // Getter et setter pour productDate
+    public function getProductDate(): ?\DateTimeInterface
+    {
+        return $this->productDate;
+    }
+
+    public function setProductDate(\DateTimeInterface $productDate): self
+    {
+        $this->productDate = $productDate;
         return $this;
     }
 

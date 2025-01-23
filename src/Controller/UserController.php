@@ -15,10 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/dashboard/users', name: 'app_dashboard_user')]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
+        // Récupérer les paramètres de recherche et de filtre
+        $searchQuery = $request->query->get('search_query');
+        $roleFilter = $request->query->get('role_filter');
+        
+        // Récupérer les statistiques
+        $totalUsers = $userRepository->count([]); // Nombre total d'utilisateurs
+        $totalAdmins = $userRepository->countUsersByRole('ROLE_ADMIN'); // Nombre d'administrateurs
+        $totalSimpleUsers = $userRepository->countUsersByRole('ROLE_USER'); // Nombre d'utilisateurs 
+
+        // Utiliser le repository pour rechercher et filtrer les utilisateurs
+        $users = $userRepository->findBySearchAndRole($searchQuery, $roleFilter);
+
         return $this->render('back/users.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
+            'search_query' => $searchQuery,
+            'role_filter' => $roleFilter,
+            'totalUsers' => $totalUsers,
+            'totalAdmins' => $totalAdmins,
+            'totalSimpleUsers' => $totalSimpleUsers,
         ]);
     }
     //---------DELETE SIMPLE back----------------

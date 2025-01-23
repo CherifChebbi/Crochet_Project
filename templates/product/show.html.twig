@@ -39,6 +39,10 @@
                             <th>Description</th>
                             <td>{{ product.description }}</td>
                         </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ product.productDate|date('Y-m-d H:i:s') }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <a href="{{ path('app_dashboard') }}" class="btn bg-gradient-danger btn-sm">Back to list</a>

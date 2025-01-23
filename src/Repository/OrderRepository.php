@@ -128,7 +128,6 @@ class OrderRepository extends ServiceEntityRepository
         // Retourner null si aucun produit n'a été vendu
         return null;
     }
-    // OrderRepository.php
 
     public function countProductsSoldThisMonth(): int
     {

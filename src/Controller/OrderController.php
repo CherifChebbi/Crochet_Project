@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductRepository;
+use App\Service\PdfGeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderController extends AbstractController
@@ -161,6 +162,28 @@ public function show(Order $order): Response
         return $this->render('order/edit.html.twig', [
             'order' => $order,
         ]);
+    }
+    #[Route('/order/{id}/export-pdf', name: 'app_export_order_pdf')]
+    public function exportOrderPdf(int $id, OrderRepository $orderRepository, PdfGeneratorService $pdfGenerator): Response
+    {
+        // Récupérer la commande depuis la base de données
+        $order = $orderRepository->find($id);
+
+        if (!$order) {
+            throw $this->createNotFoundException('Order not found');
+        }
+
+        // Détails de la commande pour le PDF
+        $orderDetails = [
+            'id' => $order->getId(),
+            'customerName' => $order->getCustomerName(),
+            'totalAmount' => $order->getTotalAmount(),
+            'customerAddress' => $order->getCustomerAddress(),
+            'customerPhone' => $order->getCustomerPhone(),
+        ];
+
+        // Générer le PDF
+        return $pdfGenerator->generateOrderPdf($orderDetails);
     }
 
 

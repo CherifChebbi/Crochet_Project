@@ -40,6 +40,10 @@
         <div class="mb-3">
             {{ form_widget(form.media, { 'attr': {'class': 'form-control', 'placeholder': 'Upload media files'} }) }}
         </div>
+        <label for="product_date">Date d'ajout</label>
+        <div class="mb-3">
+            <input type="text" class="form-control" value="{{ form.vars.value.productDate|date('d/m/Y H:i') }}" readonly>
+        </div>
     </div>
     <button type="submit" class="btn bg-gradient-danger">
         {{ button_label|default('Save') }}
