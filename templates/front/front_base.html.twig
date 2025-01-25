@@ -45,16 +45,28 @@
 <body class="animsition">
 	
 	<!-- Header -->
-	<header class="header-v4" >
+	<header>
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
-			<div class="wrap-menu-desktop how-shadow1">
+			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
 					
-					<!-- Logo desktop -->		
-					<a href="#" class="logo">
-						<img src="{{asset('front/images/crochet/logo.png')}}" alt="IMG-LOGO">
-					</a>
+					<!-- Logo website -->        
+					<div class="sidenav-header" style="flex: 1; display: flex; justify-content: center; align-items: center;">
+						<a class="navbar-brand m-0" target="_blank">
+							<!-- Texte avec dégradé de bleu sombre -->
+							<span class="ms-2 font-weight-bold" style="
+								font-family: 'Poppins', sans-serif;
+								font-size: 1.8rem; /* Taille du texte réduite */
+								background: linear-gradient(45deg, #1565C0, #0D47A1);
+								-webkit-background-clip: text;
+								-webkit-text-fill-color: transparent;
+								text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre pour améliorer la lisibilité -->
+							">
+								ZaiZen
+							</span>
+						</a>
+					</div>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
@@ -83,15 +95,6 @@
 						<a href="{{ path('cart_view') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fas fa-shopping-cart" style="font-size: 24px; cursor: pointer;"></i>
 						</a>
-
-						<!-- Instagram -->
-						<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-							<i class="fab fa-instagram" style="font-size: 24px; cursor: pointer;"> </i>
-						</a>
-						<!-- TikTok -->
-						<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-							<i class="fab fa-tiktok " style="font-size: 24px; cursor: pointer;"></i>
-						</a>
 						<!-- Login Icon -->
 						<a href="{{ path('app_login') }}"  class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fas fa-user" style="font-size: 24px; cursor: pointer;"></i>
@@ -109,14 +112,6 @@
 				<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 					<i class="fas fa-shopping-cart" style="font-size: 24px; cursor: pointer;"></i>
 				</a>	
-				<!-- Instagram -->
-				<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-					<i class="fab fa-instagram" style="font-size: 24px; cursor: pointer;"></i>
-				</a>
-				<!-- TikTok -->
-				<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-					<i class="fab fa-tiktok" style="font-size: 24px; cursor: pointer;"></i>
-				</a>
 				<!-- Login Icon -->
 				<a href="{{ path('app_login') }}"  class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 					<i class="fas fa-user" style="font-size: 24px; cursor: pointer;"></i>
@@ -185,135 +180,45 @@
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- Colonne des réseaux sociaux -->
+				<div class="col-md-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Categories
+						Suivez-nous
 					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
+					<ul class="social-icons">
+						<li class="m-b-10">
+							<a href="https://www.instagram.com/votrecompte" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+								<i class="fa fa-instagram"></i> Instagram
 							</a>
 						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
+						<li class="m-b-10">
+							<a href="https://www.tiktok.com/@votrecompte" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+								<i class="fa fa-tiktok"></i> TikTok
 							</a>
 						</li>
 					</ul>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- Colonne de contact -->
+				<div class="col-md-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Help
+						Contactez-nous
 					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shipping
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								FAQs
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						GET IN TOUCH
-					</h4>
-
-					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					<p class="stext-107 cl7">
+						<a href="mailto:contact@zaizen.com" class="cl7 hov-cl1 trans-04">
+							<i class="fa fa-envelope"></i> contact@zaizen.com
+						</a>
 					</p>
-
-					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-facebook"></i>
-						</a>
-
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-instagram"></i>
-						</a>
-
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-pinterest-p"></i>
-						</a>
-					</div>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- Colonne des droits d'auteur -->
+				<div class="col-md-12 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Newsletter
+						ZaiZen
 					</h4>
-
-					<form>
-						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
-							<div class="focus-input1 trans-04"></div>
-						</div>
-
-						<div class="p-t-18">
-							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<div class="p-t-40">
-				<div class="flex-c-m flex-w p-b-18">
-					<a href="#" class="m-all-1">
-						<img src="{{asset('front/images/icons/icon-pay-01.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('front/images/icons/icon-pay-02.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('front/images/icons/icon-pay-03.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('front/images/icons/icon-pay-04.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('front/images/icons/icon-pay-05.png')}}"alt="ICON-PAY">
-					</a>
+					<p class="stext-107 cl7">
+						&copy; 2025 ZaiZen. Tous droits réservés.
+					</p>
 				</div>
 			</div>
 		</div>

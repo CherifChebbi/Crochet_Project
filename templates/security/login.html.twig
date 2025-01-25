@@ -3,15 +3,15 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<section class="min-vh-100 mb-8">
+<section class="min-vh-100 mb-8 " style="margin-top: 150px;">
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" 
         style="background-image: url('back/assets/img/curved-images/curved14.jpg'); background-size: cover;">
         <span class="mask bg-gradient-dark opacity-6"></span>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5 text-center mx-auto">
-                    <h1 class="text-white mb-2 mt-5">Welcome Back!</h1>
-                    <p class="text-light">Log in to your account to continue.</p>
+                    <h1 class="text-white mb-2 mt-5">Ravie de vous revoir !</h1>
+                    <p class="text-light">Connectez-vous pour accéder à votre univers ZaiZen.</p>
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
 
                             {% if app.user %}
                                 <div class="alert alert-info text-center mb-3" role="alert">
-                                    You are logged in as {{ app.user.userIdentifier }}, 
-                                    <a href="{{ path('app_logout') }}" class="text-primary">Logout</a>
+                                    Connecté en tant que {{ app.user.userIdentifier }}, 
+                                    <a href="{{ path('app_logout') }}" class="text-primary">Se déconnecter</a>
                                 </div>
                             {% endif %}
 
@@ -48,11 +48,11 @@
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                             <div class="d-grid gap-2 mb-3">
-                                <button class="btn btn-lg btn-primary" type="submit">Log In</button>
+                                <button class="btn btn-lg btn-primary" type="submit">Se connecter</button>
                             </div>
 
-                            <p class="text-center mb-0">Don't have an account? 
-                                <a href="{{ path('app_register') }}" class="text-primary">Sign up here</a>
+                            <p class="text-center mb-0">Pas encore de compte ?  
+                                <a href="{{ path('app_register') }}" class="text-primary">Créez-en un ici</a>
                             </p>
                         </form>					
                     </div>

@@ -44,16 +44,28 @@
 <body class="animsition">
 	
 	<!-- Header -->
-	<header class="header-v4" >
+	<header>
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
-			<div class="wrap-menu-desktop how-shadow1">
+			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
 					
-					<!-- Logo desktop -->		
-					<a href="#" class="logo">
-						<img src="{{asset('front/images/crochet/logo.png')}}" alt="IMG-LOGO">
-					</a>
+					<!-- Logo website -->        
+					<div class="sidenav-header" style="flex: 1; display: flex; justify-content: center; align-items: center;">
+						<a class="navbar-brand m-0" target="_blank">
+							<!-- Texte avec dégradé de bleu sombre -->
+							<span class="ms-2 font-weight-bold" style="
+								font-family: 'Poppins', sans-serif;
+								font-size: 1.8rem; /* Taille du texte réduite */
+								background: linear-gradient(45deg, #1565C0, #0D47A1);
+								-webkit-background-clip: text;
+								-webkit-text-fill-color: transparent;
+								text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre pour améliorer la lisibilité -->
+							">
+								ZaiZen
+							</span>
+						</a>
+					</div>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
@@ -82,14 +94,6 @@
 						<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fas fa-shopping-cart" style="font-size: 24px; cursor: pointer;"></i>
 						</a>	
-						<!-- Instagram -->
-						<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-							<i class="fab fa-instagram" style="font-size: 24px; cursor: pointer;"></i>
-						</a>
-						<!-- TikTok -->
-						<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-							<i class="fab fa-tiktok" style="font-size: 24px; cursor: pointer;"></i>
-						</a>
 						<!-- Login Icon -->
 						<a href="{{ path('app_login') }}"  class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 							<i class="fas fa-user" style="font-size: 24px; cursor: pointer;"></i>
@@ -107,14 +111,6 @@
 				<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 					<i class="fas fa-shopping-cart" style="font-size: 24px; cursor: pointer;"></i>
 				</a>	
-				<!-- Instagram -->
-				<a href="https://www.instagram.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-					<i class="fab fa-instagram" style="font-size: 24px; cursor: pointer;"></i>
-				</a>
-				<!-- TikTok -->
-				<a href="https://www.tiktok.com" target="_blank" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-					<i class="fab fa-tiktok" style="font-size: 24px; cursor: pointer;"></i>
-				</a>
 				<!-- Login Icon -->
 				<a href="{{ path('app_login') }}"  class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 					<i class="fas fa-user" style="font-size: 24px; cursor: pointer;"></i>
@@ -153,7 +149,7 @@
 		</div>
 	</header>
 	<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('front/images/crochet/0.jpg');">
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('front/images/crochet/0.jpg');margin-top: 150px;">
 		<h2 class="ltext-105 cl0 txt-center">
 			Contact
 		</h2>
@@ -161,82 +157,94 @@
 
 
 	<!-- Content page -->
-	<section class="bg0 p-t-104 p-b-116">
-		<div class="container">
-			<div class="flex-w flex-tr">
-				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-					<form>
-						<h4 class="mtext-105 cl2 txt-center p-b-30">
-							Send Us A Message
-						</h4>
+<section class="bg0 p-t-104 p-b-116">
+    <div class="container">
+        <div class="flex-w flex-tr">
+            <!-- Formulaire de contact -->
+            <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                <form>
+                    <h4 class="mtext-105 cl2 txt-center p-b-30">
+                        Envoyez-nous un message
+                    </h4>
 
-						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address">
-							<img class="how-pos4 pointer-none" src="{{asset('front/images/icons/icon-email.png')}}" alt="ICON">
-						</div>
+                    <!-- Champ Email -->
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="email" placeholder="Votre adresse e-mail" required>
+                        <img class="how-pos4 pointer-none" src="{{asset('front/images/icons/icon-email.png')}}" alt="ICON">
+                    </div>
 
-						<div class="bor8 m-b-30">
-							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?"></textarea>
-						</div>
+                    <!-- Champ Message -->
+                    <div class="bor8 m-b-30">
+                        <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="Comment pouvons-nous vous aider ?" required></textarea>
+                    </div>
 
-						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-							Submit
-						</button>
-					</form>
-				</div>
+                    <!-- Bouton Envoyer -->
+                    <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                        Envoyer
+                    </button>
+                </form>
+            </div>
 
-				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
-					<div class="flex-w w-full p-b-42">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-map-marker"></span>
-						</span>
+            <!-- Informations de contact -->
+            <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+                <!-- Téléphone -->
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-phone-handset"></span>
+                    </span>
 
-						<div class="size-212 p-t-2">
-							<span class="mtext-110 cl2">
-								Address
-							</span>
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Téléphone
+                        </span>
 
-							<p class="stext-115 cl6 size-213 p-t-18">
-								Coza Store Center 8th floor, 379 Hudson St, New York, NY 10018 US
-							</p>
-						</div>
-					</div>
+                        <p class="stext-115 cl1 size-213 p-t-18">
+                            +216 98 123 456
+                        </p>
+                    </div>
+                </div>
 
-					<div class="flex-w w-full p-b-42">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-phone-handset"></span>
-						</span>
+                <!-- Email -->
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-envelope"></span>
+                    </span>
 
-						<div class="size-212 p-t-2">
-							<span class="mtext-110 cl2">
-								Lets Talk
-							</span>
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Support client
+                        </span>
 
-							<p class="stext-115 cl1 size-213 p-t-18">
-								+1 800 1236879
-							</p>
-						</div>
-					</div>
+                        <p class="stext-115 cl1 size-213 p-t-18">
+                            contact@zaizen.com
+                        </p>
+                    </div>
+                </div>
 
-					<div class="flex-w w-full">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-envelope"></span>
-						</span>
+                <!-- Sacs personnalisés -->
+                <div class="flex-w w-full">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-heart"></span>
+                    </span>
 
-						<div class="size-212 p-t-2">
-							<span class="mtext-110 cl2">
-								Sale Support
-							</span>
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Sacs personnalisés
+                        </span>
 
-							<p class="stext-115 cl1 size-213 p-t-18">
-								contact@example.com
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>	
+                        <p class="stext-115 cl6 size-213 p-t-18">
+                            Vous souhaitez un sac unique et personnalisé ? Contactez-nous sur Instagram pour discuter de votre projet !
+                            <br>
+                            <a href="https://www.instagram.com/votrecompte" target="_blank" class="cl7 hov-cl1 trans-04">
+                                <i class="fa fa-instagram"></i> @ZaiZen
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 	
 	
 	
@@ -247,116 +255,49 @@
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- Colonne des réseaux sociaux -->
+				<div class="col-md-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Categories
+						Suivez-nous
 					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
+					<ul class="social-icons">
+						<li class="m-b-10">
+							<a href="https://www.instagram.com/votrecompte" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+								<i class="fa fa-instagram"></i> Instagram
 							</a>
 						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
+						<li class="m-b-10">
+							<a href="https://www.tiktok.com/@votrecompte" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+								<i class="fa fa-tiktok"></i> TikTok
 							</a>
 						</li>
 					</ul>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- Colonne de contact -->
+				<div class="col-md-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Help
+						Contactez-nous
 					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shipping
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								FAQs
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						GET IN TOUCH
-					</h4>
-
-					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					<p class="stext-107 cl7">
+						<a href="mailto:contact@zaizen.com" class="cl7 hov-cl1 trans-04">
+							<i class="fa fa-envelope"></i> contact@zaizen.com
+						</a>
 					</p>
-
-					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-facebook"></i>
-						</a>
-
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-instagram"></i>
-						</a>
-
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-pinterest-p"></i>
-						</a>
-					</div>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- Colonne des droits d'auteur -->
+				<div class="col-md-12 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Newsletter
+						ZaiZen
 					</h4>
-
-					<form>
-						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
-							<div class="focus-input1 trans-04"></div>
-						</div>
-
-						<div class="p-t-18">
-							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe
-							</button>
-						</div>
-					</form>
+					<p class="stext-107 cl7">
+						&copy; 2025 ZaiZen. Tous droits réservés.
+					</p>
 				</div>
 			</div>
 		</div>
 	</footer>
-
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
