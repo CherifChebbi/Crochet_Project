@@ -18,3 +18,7 @@ Zaizen is an elegant and modern e-commerce website designed for selling handmade
 
 ## 📸 Screenshots
 Below are a few preview images of the project:
+![Image](https://github.com/user-attachments/assets/4a74ca38-2758-48ff-9c41-62e4feccd125)
+![Image](https://github.com/user-attachments/assets/1ad6cd8b-9d07-4959-a3a0-9d0a36fc3d96)
+![Image](https://github.com/user-attachments/assets/59946c47-e6d6-4f3e-a608-ced71a4d67f5)
+![Image](https://github.com/user-attachments/assets/133d1d38-78ac-44aa-abc9-30c0547b51db)
