@@ -38,11 +38,13 @@
                             <div class="form-floating mb-3">
                                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" 
                                     class="form-control" placeholder="Email Address" autocomplete="email" required autofocus>
+                                <label for="inputEmail">Email Address</label>
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="password" name="password" id="inputPassword" 
                                     class="form-control" placeholder="Password" autocomplete="current-password" required>
+                                <label for="inputPassword">Password</label>
                             </div>
 
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

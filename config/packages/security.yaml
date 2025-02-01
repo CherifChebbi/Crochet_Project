@@ -39,12 +39,14 @@ security:
             # Configurer les options supplémentaires si nécessaire
             # csrf_protection: true
 
-    # Contrôle d'accès
+    # Contrôle d'accès 
     
     access_control:
         - { path: ^/index, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/shop, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/contact, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/cart, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/order/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }  # Allow public access to /register
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
